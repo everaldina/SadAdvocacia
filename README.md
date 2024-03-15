@@ -1,2 +1,2 @@
-# SaddyAdvocacia
-Repositorio para redesign do site saddyAdvocacia em Django
+# SadAdvocacia
+Repositorio para criaçao de site em Django
