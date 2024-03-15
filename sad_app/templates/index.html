@@ -1,1 +1,10 @@
 {% extends "base.html" %}
+{% block content %}
+    <div>
+        {%for consultor in consultores%}
+            {{consultor.nome}}
+            {% empty %}
+                <p>Nenhum consultor cadastrado</p>
+        {%endfor%}
+    </div>
+{% endblock %}
