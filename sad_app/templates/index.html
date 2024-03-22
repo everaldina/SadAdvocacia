@@ -22,9 +22,9 @@
     background-color: var(--bs-dark);
   }
 
-  .sobre .conteudo {
-    background-color: var(--white);
-    width: 50%;
+  .equipe-list li::marker{
+    content: "› ";
+    color: var(--bs-dark);
   }
 </style>
 
@@ -35,7 +35,7 @@
     src="{% static 'img/objection.jpg' %}"
     alt="Foto relacionado a advocacia"
   />
-  <div class="conteudo mx-auto p-5 z-1 position-relative">
+  <div class="conteudo w-50 bg-light mx-auto p-5 z-1 position-relative">
     <h3 class="text-center text-dark">SOBRE NÓS</h3>
     <div class="text-justify">
       <p>{%lorem 80 w%}</p>
@@ -101,15 +101,15 @@
                   {% if consultor.socio%}
                    <h4 class="text-center text-secondary">Sócio</h4>
                   {% endif %}
-                  <ul>
-                    <li>Cargo: {{consultor.cargo}}</li>
+                  <ul class="equipe-list">
+                    <li><strong>Cargo: </strong>{{consultor.cargo}}</li>
 
                     {% if consultor.cod_oab and consultor.cod_oab|default_if_none:''%}
-                    <li>Cod. OAB: {{consultor.cod_oab}}</li>
+                    <li><strong>Cod. OAB:</strong> {{consultor.cod_oab}}</li>
                     {% endif %}
-                    <li>Nacionalidade: {{consultor.nacionalidade}}</li>
-                    <li>Data de Nascimento: {{consultor.data_nasimento}}</li>
-                    <li>Formação: {{consultor.formacao}}</li>
+                    <li><strong>Nacionalidade: </strong>{{consultor.nacionalidade}}</li>
+                    <li><strong>Data de Nascimento: </strong>{{consultor.data_nasimento|date:'d/m/Y'}}</li>
+                    <li><strong>Formação: </strong>{{consultor.formacao}}</li>
                   </ul>
                 </div>
               </div>
