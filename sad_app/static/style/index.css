@@ -1,0 +1,26 @@
+.consultores-container .card {
+    border: none;
+}
+
+.consultores-container .card-img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    object-position: top;
+}
+
+.sobre img {
+    width: 100%;
+    height: 350px;
+    object-fit: cover;
+    object-position: top;
+}
+
+body {
+    background-color: var(--bs-dark);
+}
+
+.equipe-list li::marker {
+    content: "› ";
+    color: var(--bs-dark);
+}

@@ -1,34 +1,7 @@
 {% extends "base.html" %} {% block content %}
-<style>
-  .consultores-container .card {
-    border: none;
-  }
-
-  .consultores-container .card-img {
-    width: 100%;
-    height: 300px;
-    object-fit: cover;
-    object-position: top;
-  }
-
-  .sobre img {
-    width: 100%;
-    height: 350px;
-    object-fit: cover;
-    object-position: top;
-  }
-
-  body {
-    background-color: var(--bs-dark);
-  }
-
-  .equipe-list li::marker{
-    content: "› ";
-    color: var(--bs-dark);
-  }
-</style>
 
 {% load static %}
+<link rel="stylesheet" href="{% static 'style/index.css' %}">
 <div class="sobre pt-5 position-relative">
   <img
     class="position-absolute z-0 top-0"
@@ -45,13 +18,13 @@
     </div>
   </div>
 </div>
-<div class="equipe mt-5">
+<div class="equipe mt-5 row">
   <h3 class="text-secondary text-center">EQUIPE</h3>
   <div class="consultores-container">
     <h4 class="text-center text-secondary mt-3">Consultores</h4>
     <div class="consultores-list d-flex justify-content-center">
       {%for consultor in consultores%}
-        <div class="card bg-dark col-1 col-md-3 m-1 m-md-4" style="width: 11rem">
+        <div class="card bg-dark col-sm-12 col-md-3 m-1 m-md-4" style="width: 11rem">
           {% load custom_filters %} 
           {% if consultor.img_path%}
           <img
