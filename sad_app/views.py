@@ -19,11 +19,16 @@ def home(request):
     }
     return render(request, 'index.html', context)
 
-def publicacoes(request):
-    publicacoes = Publicacao.objects.order_by('data_publicacao')
+def publicacoes(request):    
+    tipoLivro = tipoPublicacao.objects.get(nome = 'Livro')
+    livros = Publicacao.objects.filter(tipo=tipoLivro.id).order_by('data_publicacao')
+    
+    tipoArtigo = tipoPublicacao.objects.get(nome = 'Artigo Científico')
+    artigos = Publicacao.objects.filter(tipo=tipoArtigo.id).order_by('data_publicacao')
     
     context = {
-        'publicacoes': publicacoes,
+        'livros': livros,
+        'artigos': artigos,
     }
     
     return render(request, 'publicacoes.html', context)

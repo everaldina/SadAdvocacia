@@ -18,8 +18,11 @@ class Membro(models.Model):
 class Publicacao(models.Model):
     tipo = models.ForeignKey("tipoPublicacao", on_delete=models.CASCADE)
     titulo = models.CharField(max_length=50)
-    descricao = models.TextField()
+    descricao = models.TextField(blank=True, null=True)
     data_publicacao = models.DateField(auto_now=False, auto_now_add=False)
+    img_path = models.CharField(max_length=100, blank=True, null=True)
+    pdf_path = models.CharField(max_length=100, blank=True, null=True)
+    link = models.CharField(max_length=150, blank=True, null=True)
     
     def __str__(self):
         return self.titulo
