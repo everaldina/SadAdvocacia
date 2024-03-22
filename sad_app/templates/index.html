@@ -2,13 +2,13 @@
 
 {% load static %}
 <link rel="stylesheet" href="{% static 'style/index.css' %}">
-<div class="sobre pt-5 position-relative">
+<div class="sobre pt-5 position-relative row justify-content-center">
   <img
     class="position-absolute z-0 top-0"
     src="{% static 'img/objection.jpg' %}"
     alt="Foto relacionado a advocacia"
   />
-  <div class="conteudo w-50 bg-light mx-auto p-5 z-1 position-relative">
+  <div class="conteudo col-9 col-sm-8 col-md-7 col-lg-7 col-xl-6 bg-light p-5 z-1 position-relative">
     <h3 class="text-center text-dark">SOBRE NÓS</h3>
     <div class="text-justify">
       <p>{%lorem 80 w%}</p>
