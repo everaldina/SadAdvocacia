@@ -1,49 +1,79 @@
 {% extends "base.html" %} {% block content %}
 <style>
-  .consultores-container .card{
-      border: none;
+  .consultores-container .card {
+    border: none;
+    
   }
 
-  .consultores-container .card-img{
-      width: 100%;
-      height: 15vw;
-      object-fit: cover;
+  .consultores-container .card-img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    object-position: top;
+  }
+
+  .sobre img {
+    width: 100%;
+    height: 350px;
+    object-fit: cover;
+    object-position: top;
+  }
+
+
+  body {
+    background-color: var(--bs-dark);
+  }
+
+  .sobre .conteudo {
+    background-color: var(--white);
+    width: 50%;
   }
 </style>
 
-<div class="sobre">
-  {% comment %} <img src="{% static 'sobre.jpg' %}" alt="Foto relacionado a advocacia" /> {% endcomment %}
-  <div class="sobre-nos-conteudo">
-      {% lorem 3 p %}
-  </div>
-</div>
-<div class="consultores-container">
-  <h4 class="text-center">Consultores</h4>
-  <div class="consultores-list d-flex justify-content-center">
-    {%for consultor in consultores%}
-    <div class="card col-1 col-md-3 m-1 m-md-4" style="width: 11rem">
-      {% load custom_filters %} 
-      {% load static %} 
-      {% if  consultor.img_path%}
-      <img
-        src="{% static consultor.img_path %}"
-        class="card-img"
-        alt="Foto de {{consultor.nome}}"
-      />
-      {% else %}
-      <img
-        src="{% static 'img/icon-image-not-found-free-vector.jpg' %}"
-        class="card-img"
-        alt="Foto de {{consultor.nome}}"
-      />
-      {% endif %}
-      <div class="card-body text-center">
-        <a href="#" class="btn btn-primary">{{consultor}}</a>
+{% load static %}
+<div class="sobre pt-5 position-relative">
+    <img class="position-absolute z-0 top-0"
+      src="{% static 'img/objection.jpg' %}"
+      alt="Foto relacionado a advocacia"
+    />
+    <div class="conteudo mx-auto p-5 z-1 position-relative">
+      <h3  class="text-center text-dark">SOBRE NÓS</h3>
+      <div class="text-justify">
+        <p>{%lorem 80 w%} </p>
+        <p>{%lorem 40 w%} </p>
+        <p>{%lorem 30 w%} </p>
+        <p>{%lorem 50 w%} </p>
       </div>
     </div>
-    {% empty %}
-    <p>Nenhum consultor cadastrado</p>
-    {%endfor%}
+</div>
+<div class="equipe mt-5">
+  <h3 class="text-secondary text-center">EQUIPE</h3>
+  <div class="consultores-container">
+    <h4 class="text-center text-secondary mt-3">Consultores</h4>
+    <div class="consultores-list d-flex justify-content-center">
+      {%for consultor in consultores%}
+      <div class="card bg-dark col-1 col-md-3 m-1 m-md-4" style="width: 11rem">
+        {% load custom_filters %} {% if consultor.img_path%}
+        <img
+          src="{% static consultor.img_path %}"
+          class="card-img"
+          alt="Foto de {{consultor.nome}}"
+        />
+        {% else %}
+        <img
+          src="{% static 'img/icon-image-not-found-free-vector.jpg' %}"
+          class="card-img"
+          alt="Foto de {{consultor.nome}}"
+        />
+        {% endif %}
+        <div class="card-body bg-dark text-center">
+          <a href="#" class="btn bg-secondary">{{consultor}}</a>
+        </div>
+      </div>
+      {% empty %}
+      <p>Nenhum consultor cadastrado</p>
+      {%endfor%}
+    </div>
   </div>
 </div>
 {% endblock %}
