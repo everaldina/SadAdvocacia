@@ -1,6 +1,5 @@
 from django.db import models
 
-# Create your models here.
 class Membro(models.Model):
     nome = models.CharField(max_length=100)
     cargo = models.CharField(max_length=50)
@@ -14,3 +13,18 @@ class Membro(models.Model):
     def __str__(self):
         nome_modificado = self.nome.split(' ')[0] + ' ' + self.nome.split(' ')[-1]
         return nome_modificado
+        return self.nome
+
+class Publicacao(models.Model):
+    tipo = models.ForeignKey("tipoPublicacao", on_delete=models.CASCADE)
+    titulo = models.CharField(max_length=50)
+    descricao = models.TextField()
+    
+    def __str__(self):
+        return self.titulo
+    
+class tipoPublicacao(models.Model):
+    nome = models.CharField(max_length=100)
+    
+    def __str__(self):
+        return self.nome

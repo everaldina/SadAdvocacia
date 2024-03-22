@@ -16,3 +16,20 @@ def home(request):
         'advogados': advogado,
     }
     return render(request, 'index.html', context)
+
+def publicacoes(request):
+    
+    context = {
+        
+    }
+    
+    return render(request, 'publicacoes.html', context)
+
+
+def contato(request):
+    
+    context = {
+        
+    }
+    
+    return render(request, 'contato.html', context)
