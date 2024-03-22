@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from sad_app.models import Membro
+from sad_app.models import Publicacao
+from sad_app.models import tipoPublicacao
 
 # Create your views here.
 def home(request):
@@ -16,3 +18,21 @@ def home(request):
         'advogados': advogado,
     }
     return render(request, 'index.html', context)
+
+def publicacoes(request):
+    publicacoes = Publicacao.objects.order_by('data_publicacao')
+    
+    context = {
+        'publicacoes': publicacoes,
+    }
+    
+    return render(request, 'publicacoes.html', context)
+
+
+def contato(request):
+    
+    context = {
+        
+    }
+    
+    return render(request, 'contato.html', context)

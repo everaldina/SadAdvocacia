@@ -1,4 +1,16 @@
 {% extends "base.html" %} {% block content %}
+<style>
+  .consultores-container .card{
+      border: none;
+  }
+
+  .consultores-container .card-img{
+      width: 100%;
+      height: 15vw;
+      object-fit: cover;
+  }
+</style>
+
 <div class="sobre">
   {% comment %} <img src="{% static 'sobre.jpg' %}" alt="Foto relacionado a advocacia" /> {% endcomment %}
   <div class="sobre-nos-conteudo">

@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+    <div>
+        {% for publicacao in publicacoes%}
+            <p> {{ publicacao }} </p>
+        {% empty %}
+            <p> Não há publicações cadastradas ainda. </p>
+        {% endfor %}
+    </div>
+{% endblock %}
