@@ -12,7 +12,7 @@
     <div class="card col-1 col-md-3 m-1 m-md-4" style="width: 11rem">
       {% load custom_filters %} 
       {% load static %} 
-      {% if  consultor.img_path and consultor.img_path|static_file_exists%}
+      {% if  consultor.img_path%}
       <img
         src="{% static consultor.img_path %}"
         class="card-img"
