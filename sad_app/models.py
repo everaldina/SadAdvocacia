@@ -19,6 +19,7 @@ class Publicacao(models.Model):
     tipo = models.ForeignKey("tipoPublicacao", on_delete=models.CASCADE)
     titulo = models.CharField(max_length=50)
     descricao = models.TextField()
+    data_publicacao = models.DateField(auto_now=False, auto_now_add=False)
     
     def __str__(self):
         return self.titulo
