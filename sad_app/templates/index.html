@@ -2,7 +2,6 @@
 <style>
   .consultores-container .card {
     border: none;
-    
   }
 
   .consultores-container .card-img {
@@ -19,7 +18,6 @@
     object-position: top;
   }
 
-
   body {
     background-color: var(--bs-dark);
   }
@@ -32,19 +30,20 @@
 
 {% load static %}
 <div class="sobre pt-5 position-relative">
-    <img class="position-absolute z-0 top-0"
-      src="{% static 'img/objection.jpg' %}"
-      alt="Foto relacionado a advocacia"
-    />
-    <div class="conteudo mx-auto p-5 z-1 position-relative">
-      <h3  class="text-center text-dark">SOBRE NÓS</h3>
-      <div class="text-justify">
-        <p>{%lorem 80 w%} </p>
-        <p>{%lorem 40 w%} </p>
-        <p>{%lorem 30 w%} </p>
-        <p>{%lorem 50 w%} </p>
-      </div>
+  <img
+    class="position-absolute z-0 top-0"
+    src="{% static 'img/objection.jpg' %}"
+    alt="Foto relacionado a advocacia"
+  />
+  <div class="conteudo mx-auto p-5 z-1 position-relative">
+    <h3 class="text-center text-dark">SOBRE NÓS</h3>
+    <div class="text-justify">
+      <p>{%lorem 80 w%}</p>
+      <p>{%lorem 40 w%}</p>
+      <p>{%lorem 30 w%}</p>
+      <p>{%lorem 50 w%}</p>
     </div>
+  </div>
 </div>
 <div class="equipe mt-5">
   <h3 class="text-secondary text-center">EQUIPE</h3>
@@ -52,26 +51,73 @@
     <h4 class="text-center text-secondary mt-3">Consultores</h4>
     <div class="consultores-list d-flex justify-content-center">
       {%for consultor in consultores%}
-      <div class="card bg-dark col-1 col-md-3 m-1 m-md-4" style="width: 11rem">
-        {% load custom_filters %} {% if consultor.img_path%}
-        <img
-          src="{% static consultor.img_path %}"
-          class="card-img"
-          alt="Foto de {{consultor.nome}}"
-        />
-        {% else %}
-        <img
-          src="{% static 'img/icon-image-not-found-free-vector.jpg' %}"
-          class="card-img"
-          alt="Foto de {{consultor.nome}}"
-        />
-        {% endif %}
-        <div class="card-body bg-dark text-center">
-          <a href="#" class="btn bg-secondary">{{consultor}}</a>
+        <div class="card bg-dark col-1 col-md-3 m-1 m-md-4" style="width: 11rem">
+          {% load custom_filters %} 
+          {% if consultor.img_path%}
+          <img
+            src="{% static consultor.img_path %}"
+            class="card-img"
+            alt="Foto de {{consultor.nome}}"
+          />
+          {% else %}
+          <img
+            src="{% static 'img/icon-image-not-found-free-vector.jpg' %}"
+            class="card-img"
+            alt="Foto de {{consultor.nome}}"
+          />
+          {% endif %}
+          <div class="card-body bg-dark text-center">
+            <a
+              href=""
+              class="btn bg-secondary"
+              data-bs-toggle="modal"
+              data-bs-target="#{{consultor.id}}Backdrop"
+              >{{consultor}}</a
+            >
+          </div>
+          <div
+            class="modal fade"
+            id="{{consultor.id}}Backdrop"
+            data-bs-backdrop="static"
+            data-bs-keyboard="false"
+            tabindex="-1"
+            aria-labelledby="{{consultor.id}}BackdropLabel"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="{{consultor.id}}BackdropLabel">
+                    {{consultor.nome}}
+                  </h1>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  ></button>
+                </div>
+                <div class="modal-body">
+                  {% if consultor.socio%}
+                   <h4 class="text-center text-secondary">Sócio</h4>
+                  {% endif %}
+                  <ul>
+                    <li>Cargo: {{consultor.cargo}}</li>
+
+                    {% if consultor.cod_oab and consultor.cod_oab|default_if_none:''%}
+                    <li>Cod. OAB: {{consultor.cod_oab}}</li>
+                    {% endif %}
+                    <li>Nacionalidade: {{consultor.nacionalidade}}</li>
+                    <li>Data de Nascimento: {{consultor.data_nasimento}}</li>
+                    <li>Formação: {{consultor.formacao}}</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
-      {% empty %}
-      <p>Nenhum consultor cadastrado</p>
+        {% empty %}
+        <p>Nenhum consultor cadastrado</p>
       {%endfor%}
     </div>
   </div>

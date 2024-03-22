@@ -13,7 +13,6 @@ class Membro(models.Model):
     def __str__(self):
         nome_modificado = self.nome.split(' ')[0] + ' ' + self.nome.split(' ')[-1]
         return nome_modificado
-        return self.nome
 
 class Publicacao(models.Model):
     tipo = models.ForeignKey("tipoPublicacao", on_delete=models.CASCADE)
