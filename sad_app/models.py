@@ -9,6 +9,8 @@ class Membro(models.Model):
     nacionalidade = models.CharField(max_length=50)
     data_nasimento = models.DateField()
     formacao = models.TextField()
+    img_path = models.CharField(max_length=100, blank=True, null=True)
     
     def __str__(self):
-        return self.nome
+        nome_modificado = self.nome.split(' ')[0] + ' ' + self.nome.split(' ')[-1]
+        return nome_modificado

@@ -1,10 +1,37 @@
-{% extends "base.html" %}
-{% block content %}
-    <div>
-        {%for consultor in consultores%}
-            {{consultor.nome}}
-            {% empty %}
-                <p>Nenhum consultor cadastrado</p>
-        {%endfor%}
+{% extends "base.html" %} {% block content %}
+<div class="sobre">
+  {% comment %} <img src="{% static 'sobre.jpg' %}" alt="Foto relacionado a advocacia" /> {% endcomment %}
+  <div class="sobre-nos-conteudo">
+      {% lorem 3 p %}
+  </div>
+</div>
+<div class="consultores-container">
+  <h4 class="text-center">Consultores</h4>
+  <div class="consultores-list d-flex justify-content-center">
+    {%for consultor in consultores%}
+    <div class="card col-1 col-md-3 m-1 m-md-4" style="width: 11rem">
+      {% load custom_filters %} 
+      {% load static %} 
+      {% if  consultor.img_path and consultor.img_path|static_file_exists%}
+      <img
+        src="{% static consultor.img_path %}"
+        class="card-img"
+        alt="Foto de {{consultor.nome}}"
+      />
+      {% else %}
+      <img
+        src="{% static 'img/icon-image-not-found-free-vector.jpg' %}"
+        class="card-img"
+        alt="Foto de {{consultor.nome}}"
+      />
+      {% endif %}
+      <div class="card-body text-center">
+        <a href="#" class="btn btn-primary">{{consultor}}</a>
+      </div>
     </div>
+    {% empty %}
+    <p>Nenhum consultor cadastrado</p>
+    {%endfor%}
+  </div>
+</div>
 {% endblock %}
