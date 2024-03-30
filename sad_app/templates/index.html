@@ -45,7 +45,7 @@
               class="btn bg-secondary"
               data-bs-toggle="modal"
               data-bs-target="#{{consultor.id}}Backdrop"
-              >{{consultor}}</a
+              >{{consultor.nome_modificado}}</a
             >
           </div>
           <div
@@ -61,7 +61,7 @@
               <div class="modal-content">
                 <div class="modal-header">
                   <h1 class="modal-title fs-5" id="{{consultor.id}}BackdropLabel">
-                    {{consultor.nome}}
+                    {{consultor.nome_modificado}}
                   </h1>
                   <button
                     type="button"
