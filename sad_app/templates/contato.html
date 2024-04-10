@@ -1,6 +1,31 @@
 {% extends "base.html" %}
 {% block content %}
-    <div>
-        Contato funciona!
+<div class="container-fluid">
+    <div class="contatos">
+        
     </div>
+    <form>
+        <div class="mb-3">
+            <label for="name" class="form-label">Nome</label>
+            <input type="text" class="form-control" id="name" required placeholder="Nome*">
+        </div>
+        
+        <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control" id="email" required placeholder="seuemail@email.com*">
+        </div>
+
+        <div class="mb-3">
+            <label for="assunto" class="form-label">Assunto</label>
+            <input type="text" class="form-control" id="assunto" required placeholder="">
+        </div>
+
+        <div class="mb-3">
+            <label for="mensagem" class="form-label">Mensagem</label>
+            <textarea class="form-control" id="mensagem" required placeholder=""></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Enviar</button>
+    </form>
+</div>
 {% endblock %}
