@@ -1,31 +1,32 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="container-fluid">
-    <div class="contatos">
-        
+{% load static %}
+<link rel="stylesheet" href="{% static 'style/contato.css' %}">
+<div class="justify-content-center row w-100">
+    <div class="container-fluid bg-white shadow p-3 p-sm-5 m-5 col-9 col-sm-8 col-md-7 col-lg-6 col-xl-5 col-xll-5 rounded">
+        <form>
+            <div class="mb-3">
+                <bold><label for="name" class="form-label">Nome</label></bold>
+                <input type="text" class="form-control" id="name" required placeholder="Nome*">
+            </div>
+            
+            <div class="mb-3">
+                <bold><label for="email" class="form-label">Email</label></bold>
+                <input type="email" class="form-control" id="email" required placeholder="seuemail@email.com*">
+            </div>
+
+            <div class="mb-3">
+                <bold><label for="assunto" class="form-label">Assunto</label></bold>
+                <input type="text" class="form-control" id="assunto" required placeholder="">
+            </div>
+
+            <div class="mb-3">
+                <bold><label for="mensagem" class="form-label">Mensagem</label></bold>
+                <textarea class="form-control" id="mensagem" required placeholder=""></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Enviar</button>
+        </form>
     </div>
-    <form>
-        <div class="mb-3">
-            <label for="name" class="form-label">Nome</label>
-            <input type="text" class="form-control" id="name" required placeholder="Nome*">
-        </div>
-        
-        <div class="mb-3">
-            <label for="email" class="form-label">Email</label>
-            <input type="email" class="form-control" id="email" required placeholder="seuemail@email.com*">
-        </div>
-
-        <div class="mb-3">
-            <label for="assunto" class="form-label">Assunto</label>
-            <input type="text" class="form-control" id="assunto" required placeholder="">
-        </div>
-
-        <div class="mb-3">
-            <label for="mensagem" class="form-label">Mensagem</label>
-            <textarea class="form-control" id="mensagem" required placeholder=""></textarea>
-        </div>
-
-        <button type="submit" class="btn btn-primary">Enviar</button>
-    </form>
 </div>
 {% endblock %}

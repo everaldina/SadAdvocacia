@@ -1,0 +1,4 @@
+body {
+    background-color: var(--bs-light);
+    min-width: 320px;
+}
