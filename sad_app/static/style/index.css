@@ -17,3 +17,11 @@ body {
     content: "› ";
     color: var(--bs-dark);
 }
+
+.sobre img{
+    max-height: 66vh;
+    min-height: 50vh;
+    object-fit: cover;
+    object-position: top;
+    height: auto;
+}
