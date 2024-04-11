@@ -72,7 +72,7 @@ class Membro(models.Model):
 
 class Publicacao(models.Model):
     fk_tipo = models.ForeignKey("tipoPublicacao", on_delete=models.CASCADE)
-    titulo = models.CharField(max_length=50)
+    titulo = models.CharField(max_length=100)
     descricao = models.TextField(blank=True, null=True)
     data_publicacao = models.DateField(auto_now=False, auto_now_add=False)
     img_path = models.CharField(max_length=100, blank=True, null=True)
