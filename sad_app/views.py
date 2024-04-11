@@ -25,10 +25,10 @@ def home(request):
 
 def publicacoes(request):    
     tipoLivro = tipoPublicacao.objects.get(nome = 'Livro')
-    livros = Publicacao.objects.filter(tipo=tipoLivro.id).order_by('data_publicacao')
+    livros = Publicacao.objects.filter(fk_tipo=tipoLivro.id).order_by('data_publicacao')
     
     tipoArtigo = tipoPublicacao.objects.get(nome = 'Artigo Científico')
-    artigos = Publicacao.objects.filter(tipo=tipoArtigo.id).order_by('data_publicacao')
+    artigos = Publicacao.objects.filter(fk_tipo=tipoArtigo.id).order_by('data_publicacao')
     
     context = {
         'livros': livros,
