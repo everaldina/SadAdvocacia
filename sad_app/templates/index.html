@@ -20,79 +20,96 @@
 </div>
 <div class="equipe mt-5 row">
   <h3 class="text-secondary text-center">EQUIPE</h3>
-  <div class="consultores-container">
-    <h4 class="text-center text-secondary mt-3">Consultores</h4>
-    <div class="consultores-list d-flex justify-content-center">
-      {%for consultor in consultores%}
-        <div class="card bg-dark col-sm-12 col-md-3 m-1 m-md-4" style="width: 11rem">
-          {% load custom_filters %} 
-          {% if consultor.img_path%}
-          <img
-            src="{% static consultor.img_path %}"
-            class="card-img"
-            alt="Foto de {{consultor.nome}}"
-          />
-          {% else %}
-          <img
-            src="{% static 'img/icon-image-not-found-free-vector.jpg' %}"
-            class="card-img"
-            alt="Foto de {{consultor.nome}}"
-          />
-          {% endif %}
-          <div class="card-body bg-dark text-center">
-            <a
-              href=""
-              class="btn bg-secondary"
-              data-bs-toggle="modal"
-              data-bs-target="#{{consultor.id}}Backdrop"
-              >{{consultor.nome_modificado}}</a
+  {% for cargo, membros in equipe_por_cargo.items%}
+    <div class="{{cargo}}-container">
+      <h4 class="text-center text-secondary mt-3">{{cargo}}s</h4>
+      <div class="{{cargo}}-list d-flex justify-content-center">
+        {%for m in membros%}
+          <div class="card bg-dark col-sm-12 col-md-3 m-1 m-md-4" style="width: 11rem">
+            {% load custom_filters %} 
+            {% if m.img_path%}
+            <img
+              src="{% static m.img_path %}"
+              class="card-img"
+              alt="Foto de {{m.nome}}"
+            />
+            {% else %}
+            <img
+              src="{% static 'img/icon-image-not-found-free-vector.jpg' %}"
+              class="card-img"
+              alt="Foto de {{m.nome}}"
+            />
+            {% endif %}
+            <div class="card-body bg-dark text-center">
+              <a
+                href=""
+                class="btn bg-secondary"
+                data-bs-toggle="modal"
+                data-bs-target="#{{m.id}}Backdrop"
+                >{{m.nome_modificado}}</a
+              >
+            </div>
+            <div
+              class="modal fade"
+              id="{{m.id}}Backdrop"
+              data-bs-backdrop="static"
+              data-bs-keyboard="false"
+              tabindex="-1"
+              aria-labelledby="{{m.id}}BackdropLabel"
+              aria-hidden="true"
             >
-          </div>
-          <div
-            class="modal fade"
-            id="{{consultor.id}}Backdrop"
-            data-bs-backdrop="static"
-            data-bs-keyboard="false"
-            tabindex="-1"
-            aria-labelledby="{{consultor.id}}BackdropLabel"
-            aria-hidden="true"
-          >
-            <div class="modal-dialog modal-dialog-centered">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h1 class="modal-title fs-5" id="{{consultor.id}}BackdropLabel">
-                    {{consultor.nome_modificado}}
-                  </h1>
-                  <button
-                    type="button"
-                    class="btn-close"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
-                  ></button>
-                </div>
-                <div class="modal-body">
-                  {% if consultor.socio%}
-                   <h4 class="text-center text-secondary">Sócio</h4>
-                  {% endif %}
-                  <ul class="equipe-list">
-                    <li><strong>Cargo: </strong>{{consultor.cargo}}</li>
-
-                    {% if consultor.cod_oab and consultor.cod_oab|default_if_none:''%}
-                    <li><strong>Cod. OAB:</strong> {{consultor.cod_oab}}</li>
+              <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="{{m.id}}BackdropLabel">
+                      {{m.nome_modificado}}
+                    </h1>
+                    <button
+                      type="button"
+                      class="btn-close"
+                      data-bs-dismiss="modal"
+                      aria-label="Close"
+                    ></button>
+                  </div>
+                  <div class="modal-body">
+                    {% if m.socio%}
+                      <h4 class="text-center text-secondary">Sócio</h4>
                     {% endif %}
-                    <li><strong>Nacionalidade: </strong>{{consultor.nacionalidade}}</li>
-                    <li><strong>Data de Nascimento: </strong>{{consultor.data_nasimento|date:'d/m/Y'}}</li>
-                    <li><strong>Formação: </strong>{{consultor.formacao}}</li>
-                  </ul>
+                    <h6 class="text-center">{{cargo|upper}}</h6>
+                    <ul class="equipe-list mt-3">
+
+                      {% if m.cod_oab and m.cod_oab|default_if_none:''%}
+                      <li><strong>Cod. OAB:</strong> {{m.cod_oab}}</li>
+                      {% endif %}
+                      <li><strong>Nacionalidade: </strong>{{m.fk_nacionalidade}}</li>
+                      <li><strong>Data de Nascimento: </strong>{{m.data_nascimento|date:'d/m/Y'}}</li>
+                      <li><strong>Formação</strong>{{m.formacao}}</li>
+                      <ul class="formacao-list">
+                        <li>
+                          {% for formacao in m.formacao_ordenadas%}
+                            <p class="mb-0">{{formacao.instituicao}}</p>
+                            <p class="mb-0">
+                              {{formacao.ano_entrada}} -
+                              {{formacao.ano_conclusao|default_if_none:''}}
+                            </p>
+                            <p class="mb-0">
+                              {{formacao.get_nivel_formacao_display}}: {{formacao.nome_curso}} ({{ formacao.get_modalidade_display}})
+                            </p>
+                            <p class="mb-0">Tese: "{{formacao.titulo_tese}}"</p>
+                          {% endfor%}
+                        </li>
+                      </ul>
+                    </ul>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-        {% empty %}
-        <p>Nenhum consultor cadastrado</p>
-      {%endfor%}
+          {% empty %}
+          <p>Nenhum consultor cadastrado</p>
+        {%endfor%}
+      </div>
     </div>
-  </div>
+  {% endfor %}
 </div>
 {% endblock %}
