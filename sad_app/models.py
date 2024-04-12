@@ -3,7 +3,6 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 import datetime
 from django.core.exceptions import ValidationError
 
-
 class NivelFormacao(models.Model):
     nome = models.CharField(max_length=50)
     
@@ -42,7 +41,6 @@ class Formacao(models.Model):
     def __str__(self):
         return self.fk_membro.nome
     
-    
     def _validate_ano_conclusao(self):
         if self.ano_conclusao and self.ano_conclusao <= self.ano_entrada:
             raise ValidationError("Ano de conclusão deve ser maior que o ano de entrada.")
@@ -51,8 +49,6 @@ class Formacao(models.Model):
         self._validate_ano_conclusao()
         return super().save(*args, **kwargs)
 
-    
-    
 class Nacionalidade(models.Model):
     nome_nacionalidade = models.CharField(max_length=50)
     nome_pais = models.CharField(max_length=50)
@@ -60,7 +56,6 @@ class Nacionalidade(models.Model):
     
     def __str__(self):
         return self.nome_nacionalidade
-
 
 class Cargo(models.Model):
     nome = models.CharField(max_length=50)
@@ -77,7 +72,6 @@ class Membro(models.Model):
     data_nascimento = models.DateField(blank=True, null=True)
     img_path = models.CharField(max_length=100, blank=True, null=True)
     
-
     def __str__(self):
         return self.nome
     
@@ -88,7 +82,7 @@ class Membro(models.Model):
 class Publicacao(models.Model):
     fk_tipo = models.ForeignKey("tipoPublicacao", on_delete=models.CASCADE)
     titulo = models.CharField(max_length=100)
-    descricao = models.TextField(blank=True, null=True)
+    sinopse = models.TextField(blank=True, null=True)
     data_publicacao = models.DateField(auto_now=False, auto_now_add=False)
     img_path = models.CharField(max_length=100, blank=True, null=True)
     pdf_path = models.CharField(max_length=100, blank=True, null=True)
@@ -102,3 +96,12 @@ class tipoPublicacao(models.Model):
     
     def __str__(self):
         return self.nome
+
+class Contato(models.Model):
+    nome = models.CharField(max_length=100)
+    email = models.EmailField()
+    assunto = models.CharField(max_length=100)
+    mensagem = models.TextField()
+
+    def __str__(self):
+        return self.nome + ' - ' + self.assunto
