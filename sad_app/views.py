@@ -2,16 +2,14 @@ from django.shortcuts import render
 from sad_app.models import Membro
 from sad_app.models import Publicacao
 from sad_app.models import tipoPublicacao
+from sad_app.models import Cargo
 
 # Create your views here.
 def home(request):
-    cargos = [cargo[0] for cargo in Membro.Cargo.choices]
-    equipe = Membro.objects.all()
+    cargos = Cargo.objects.all()
     equipe_por_cargo = {}
     for cargo in cargos:
-        membros = equipe.filter(cargo=cargo)
-        nome_cargo = dict(Membro.Cargo.choices).get(cargo)
-        equipe_por_cargo[nome_cargo] = membros
+        equipe_por_cargo[cargo] = cargo.membro_set.all()
         
     for cargo in equipe_por_cargo:
         for membro in equipe_por_cargo[cargo]:

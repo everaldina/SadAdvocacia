@@ -87,13 +87,13 @@
                       <ul class="formacao-list">
                         <li>
                           {% for formacao in m.formacao_ordenadas%}
-                            <p class="mb-0">{{formacao.instituicao}}</p>
+                            <p class="mb-0">
+                              <strong>{{ formacao.fk_curso.fk_nivel }} em {{ formacao.fk_curso.nome }} ({{ formacao.fk_curso.fk_modalidade }})</strong>
+                            </p>
+                            <p class="mb-0">{{ formacao.fk_curso.fk_instituicao.sigla }} - {{ formacao.fk_curso.fk_instituicao }}</p>
                             <p class="mb-0">
                               {{formacao.ano_entrada}} -
                               {{formacao.ano_conclusao|default_if_none:''}}
-                            </p>
-                            <p class="mb-0">
-                              {{formacao.get_nivel_formacao_display}}: {{formacao.nome_curso}} ({{ formacao.get_modalidade_display}})
                             </p>
                             <p class="mb-0">Tese: "{{formacao.titulo_tese}}"</p>
                           {% endfor%}
