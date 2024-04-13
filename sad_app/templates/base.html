@@ -28,6 +28,16 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'publicacoes' %}">Publicações</a>
                         </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Cadastros
+                            </a>
+                            <ul class="dropdown-menu">
+                              <li><a class="dropdown-item" href="{% url 'formulario_formacao' %}">Publicação</a></li>
+                              <li><a class="dropdown-item" href="{% url 'formulario_membro' %}">Membro</a></li>
+                              <li><a class="dropdown-item" href="{% url 'formulario_publicacao' %}">Formacao</a></li>
+                            </ul>
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'contato' %}">Contato</a>
                         </li>
@@ -41,5 +51,6 @@
 
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+
     </body>
 </html>
