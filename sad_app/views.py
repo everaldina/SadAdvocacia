@@ -52,3 +52,12 @@ def contato(request):
     }
     
     return render(request, 'contato.html', context)
+
+def formulario_membro(request):
+    return render(request, 'formulario_membro.html')
+
+def formulario_publicacao(request):
+    return render(request, 'formulario_publicacao.html')
+
+def formulario_formacao(request):
+    return render(request, 'formulario_formacao.html')
