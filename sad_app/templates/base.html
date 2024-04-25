@@ -28,7 +28,7 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'publicacoes' %}">Publicações</a>
                         </li>
-                        <li class="nav-item dropdown">
+                        {% comment %} <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Cadastros
                             </a>
@@ -37,6 +37,9 @@
                               <li><a class="dropdown-item" href="{% url 'formulario_membro' %}">Membro</a></li>
                               <li><a class="dropdown-item" href="{% url 'formulario_formacao' %}">Formacao</a></li>
                             </ul>
+                        </li> {% endcomment %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'cadastro' %}">Cadastro</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'contato' %}">Contato</a>

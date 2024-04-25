@@ -72,3 +72,6 @@ def formulario_publicacao(request):
 
 def formulario_formacao(request):
     return render(request, 'formulario_formacao.html')
+
+def cadastro(request):
+    return render(request, 'cadastro.html')

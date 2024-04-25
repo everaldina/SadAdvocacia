@@ -1,0 +1,9 @@
+{% extends "base.html"%}
+
+{% block content %}
+{% load static%}
+    <a href="{% url 'formulario_membro' %}">Formulario membro</a>
+    <a href="{% url 'formulario_formacao' %}">Formulario formação</a>
+    {% block form %}
+    {% endblock %}
+{% endblock %}
