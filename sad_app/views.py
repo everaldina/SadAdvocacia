@@ -5,6 +5,7 @@ from sad_app.models import Publicacao
 from sad_app.models import tipoPublicacao
 from sad_app.models import Cargo
 
+from sad_app.forms import MembroForm
 from sad_app.forms import ContatoForm
 from sad_app.forms import PublicacaoForm
 from sad_app.forms import TipoPublicacaoForm
@@ -58,7 +59,13 @@ def contato(request):
     return render(request, 'contato.html', context)
 
 def formulario_membro(request):
-    return render(request, 'formulario_membro.html')
+    form_membro = MembroForm()
+
+    context = {
+        'form_membro': form_membro,
+    }
+
+    return render(request, 'formulario_membro.html', context=context)
 
 def formulario_publicacao(request):
     form_publicacao = PublicacaoForm()

@@ -126,6 +126,14 @@ class NacionalidadeForm(forms.ModelForm):
             'nome_pais': 'Nome do País',
             'sigla_pais': 'Sigla do País'
         }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.fields['nome_nacionalidade'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Nome da Nacionalidade*', 'required': 'required'})
+        self.fields['nome_pais'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Nome do País*', 'required': 'required'})
+        self.fields['sigla_pais'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Sigla do País*', 'required': 'required'})
+
         
 class CargoForm(forms.ModelForm):
     class Meta:
