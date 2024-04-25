@@ -59,7 +59,7 @@ class ModalidadeForm(forms.ModelForm):
         self.fields['nome'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Nome*', 'required': 'required'})
         
         
-class Curso(forms.ModelForm):
+class CursoForm(forms.ModelForm):
     class Meta:
         model = Curso
         fields = ['nome', 'fk_instituicao', 'fk_modalidade', 'fk_nivel']

@@ -1,14 +1,7 @@
 from django.shortcuts import render
 
-from sad_app.models import Membro
-from sad_app.models import Publicacao
-from sad_app.models import tipoPublicacao
-from sad_app.models import Cargo
-
-from sad_app.forms import MembroForm
-from sad_app.forms import ContatoForm
-from sad_app.forms import PublicacaoForm
-from sad_app.forms import TipoPublicacaoForm
+from sad_app.models import Publicacao, tipoPublicacao, Cargo
+from sad_app.forms import *
 
 # Create your views here.
 def home(request):
@@ -69,16 +62,84 @@ def formulario_membro(request):
 
 def formulario_publicacao(request):
     form_publicacao = PublicacaoForm()
-    form_tipo_publicacao = TipoPublicacaoForm()
     
     context = {
         'form_publicacao': form_publicacao,
-        'form_tipo_publicacao': form_tipo_publicacao,
     }
+    
     return render(request, 'formulario_publicacao.html', context)
 
+def formulario_tipoPublicacao(request):
+    form_tipo_publicacao = TipoPublicacaoForm()
+    
+    context = {
+        'form_tipo_publicacao': form_tipo_publicacao,
+    }
+
+    return render(request, 'tipoPublicacao.html', context)
+
 def formulario_formacao(request):
-    return render(request, 'formulario_formacao.html')
+    form_formacao = FormacaoForm()
+
+    context = {
+        'form_formacao': form_formacao,
+    }
+
+    return render(request, 'formulario_formacao.html', context=context)
+
+def formulario_nacionalidade(request):
+    form_nacionalidade = NacionalidadeForm()
+
+    context = {
+        'form_nacionalidade': form_nacionalidade,
+    }
+
+    return render(request, 'nacionalidade.html', context)
+
+def formulario_cargo(request):
+    form_cargo = CargoForm()
+
+    context = {
+        'form_cargo': form_cargo,
+    }
+
+    return render(request, 'cargo.html', context)
+
+def formulario_instituicao(request):
+    form_instituicao = InstituicaoForm()
+
+    context = {
+        'form_instituicao': form_instituicao,
+    }
+
+    return render(request, 'instituicao.html', context)
+
+def formulario_curso(request):
+    form_curso = CursoForm()
+
+    context = {
+        'form_curso': form_curso,
+    }
+
+    return render(request, 'curso.html', context)
+
+def formulario_modalidade(request):
+    form_modalidade = ModalidadeForm()
+
+    context = {
+        'form_modalidade': form_modalidade,
+    }
+
+    return render(request, 'modalidade.html', context)
+
+def formulario_nivel_form(request):
+    form_nivel = NivelFormacaoForm()
+
+    context = {
+        'form_nivel': form_nivel,
+    }
+
+    return render(request, 'nivel.html', context)
 
 def cadastro(request):
     return render(request, 'cadastro.html')
