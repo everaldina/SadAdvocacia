@@ -8,6 +8,8 @@ from .models import Formacao
 from .models import Nacionalidade
 from .models import Cargo
 from .models import Membro
+from .models import Publicacao
+from .models import tipoPublicacao
 
 
 class ContatoForm(forms.ModelForm):
@@ -162,3 +164,43 @@ class MembroForm(forms.ModelForm):
         self.fields['fk_nacionalidade'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Nacionalidade*', 'required': 'required'})
         self.fields['data_nascimento'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Data de Nascimento*', 'required': 'required'})
         self.fields['img_path'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Imagem*', 'required': 'required'})
+        
+        
+class PublicacaoForm(forms.ModelForm):
+    class Meta:
+        model = Publicacao
+        fields = ['titulo', 'fk_tipo', 'sinopse', 'data_publicacao', 'img_path', 'pdf_path', 'link']
+        labels = {
+            'titulo': 'Título',
+            'fk_tipo': 'Tipo',
+            'sinopse': 'Sinopse',
+            'data_publicacao': 'Data de Publicação',
+            'img_path': 'Imagem',
+            'pdf_path': 'PDF',
+            'link': 'Link'
+        }
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.fields['titulo'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Título*', 'required': 'required'})
+        self.fields['fk_tipo'].widget.attrs.update({'class': 'form-select', 'placeholder': 'Tipo*', 'required': 'required'})
+        self.fields['sinopse'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Sinopse'})
+        self.fields['data_publicacao'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Data de Publicação*', 'required': 'required'})
+        self.fields['img_path'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Imagem'})
+        self.fields['pdf_path'].widget.attrs.update({'class': 'form-control', 'placeholder': 'PDF'})
+        self.fields['link'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Link'})
+        
+class TipoPublicacaoForm(forms.ModelForm):
+    class Meta:
+        model = tipoPublicacao
+        fields = ['nome']
+        labels = {
+            'nome': 'Nome'
+        }
+        
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.fields['nome'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Nome*', 'required': 'required'})
+

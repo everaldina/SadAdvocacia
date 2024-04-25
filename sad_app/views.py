@@ -1,9 +1,13 @@
 from django.shortcuts import render
+
 from sad_app.models import Membro
 from sad_app.models import Publicacao
 from sad_app.models import tipoPublicacao
 from sad_app.models import Cargo
+
 from sad_app.forms import ContatoForm
+from sad_app.forms import PublicacaoForm
+from sad_app.forms import TipoPublicacaoForm
 
 # Create your views here.
 def home(request):
@@ -57,7 +61,14 @@ def formulario_membro(request):
     return render(request, 'formulario_membro.html')
 
 def formulario_publicacao(request):
-    return render(request, 'formulario_publicacao.html')
+    form_publicacao = PublicacaoForm()
+    form_tipo_publicacao = TipoPublicacaoForm()
+    
+    context = {
+        'form_publicacao': form_publicacao,
+        'form_tipo_publicacao': form_tipo_publicacao,
+    }
+    return render(request, 'formulario_publicacao.html', context)
 
 def formulario_formacao(request):
     return render(request, 'formulario_formacao.html')
