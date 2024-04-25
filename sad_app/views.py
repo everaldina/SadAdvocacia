@@ -132,7 +132,7 @@ def formulario_modalidade(request):
 
     return render(request, 'modalidade.html', context)
 
-def formulario_nivel_form(request):
+def formulario_nivel_formacao(request):
     form_nivel = NivelFormacaoForm()
 
     context = {
