@@ -2,8 +2,66 @@
 
 {% block content %}
 {% load static%}
-    <a href="{% url 'formulario_membro' %}">Formulario membro</a>
-    <a href="{% url 'formulario_formacao' %}">Formulario formação</a>
-    {% block form %}
-    {% endblock %}
+<div class="row">
+        <div class="col-2 border">
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link active" href="{% url 'formulario_membro' %}" aria-current="page" href="#">
+                        Membro
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="{% url 'formulario_nacionalidade' %}" aria-current="page" href="#">
+                        Nacionalidade
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="{% url 'formulario_publicacao' %}" aria-current="page" href="#">
+                        Publicação
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="{% url 'formulario_tipo_publicacao' %}" aria-current="page" href="#">
+                        Tipo de Publicação
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="{% url 'formulario_formacao' %}" aria-current="page" href="#">
+                        Formação
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="{% url 'formulario_curso' %}" aria-current="page" href="#">
+                        Curso
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="{% url 'formulario_instituicao' %}" aria-current="page" href="#">
+                        Instituição
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="{% url 'formulario_nivel_formacao' %}" aria-current="page" href="#">
+                        Nivel de Formação
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="{% url 'formulario_modalidade' %}" aria-current="page" href="#">
+                        Modalidade
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="{% url 'formulario_cargo' %}" aria-current="page" href="#">
+                        Cargo
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+
+        <div class="col-10 px-5 py-3">
+            {% block form %}
+            {% endblock %}
+        </div>
+    </div>
 {% endblock %}
