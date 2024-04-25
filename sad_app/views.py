@@ -142,4 +142,4 @@ def formulario_nivel_formacao(request):
     return render(request, 'forms/nivel.html', context)
 
 def cadastro(request):
-    return render(request, 'formulario_cadastro.html')
+    return render(request, 'cadastro.html')
