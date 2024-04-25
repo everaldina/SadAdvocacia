@@ -58,7 +58,7 @@ def formulario_membro(request):
         'form_membro': form_membro,
     }
 
-    return render(request, 'formulario_membro.html', context=context)
+    return render(request, 'forms/membro.html', context=context)
 
 def formulario_publicacao(request):
     form_publicacao = PublicacaoForm()
@@ -67,7 +67,7 @@ def formulario_publicacao(request):
         'form_publicacao': form_publicacao,
     }
     
-    return render(request, 'formulario_publicacao.html', context)
+    return render(request, 'forms/publicacao.html', context)
 
 def formulario_tipoPublicacao(request):
     form_tipo_publicacao = TipoPublicacaoForm()
@@ -76,7 +76,7 @@ def formulario_tipoPublicacao(request):
         'form_tipo_publicacao': form_tipo_publicacao,
     }
 
-    return render(request, 'tipoPublicacao.html', context)
+    return render(request, 'forms/tipo_publicacao.html', context)
 
 def formulario_formacao(request):
     form_formacao = FormacaoForm()
@@ -85,7 +85,7 @@ def formulario_formacao(request):
         'form_formacao': form_formacao,
     }
 
-    return render(request, 'formulario_formacao.html', context=context)
+    return render(request, 'forms/formacao.html', context=context)
 
 def formulario_nacionalidade(request):
     form_nacionalidade = NacionalidadeForm()
@@ -94,7 +94,7 @@ def formulario_nacionalidade(request):
         'form_nacionalidade': form_nacionalidade,
     }
 
-    return render(request, 'nacionalidade.html', context)
+    return render(request, 'forms/nacionalidade.html', context)
 
 def formulario_cargo(request):
     form_cargo = CargoForm()
@@ -103,7 +103,7 @@ def formulario_cargo(request):
         'form_cargo': form_cargo,
     }
 
-    return render(request, 'cargo.html', context)
+    return render(request, 'forms/cargo.html', context)
 
 def formulario_instituicao(request):
     form_instituicao = InstituicaoForm()
@@ -112,7 +112,7 @@ def formulario_instituicao(request):
         'form_instituicao': form_instituicao,
     }
 
-    return render(request, 'instituicao.html', context)
+    return render(request, 'forms/instituicao.html', context)
 
 def formulario_curso(request):
     form_curso = CursoForm()
@@ -121,7 +121,7 @@ def formulario_curso(request):
         'form_curso': form_curso,
     }
 
-    return render(request, 'curso.html', context)
+    return render(request, 'forms/curso.html', context)
 
 def formulario_modalidade(request):
     form_modalidade = ModalidadeForm()
@@ -130,7 +130,7 @@ def formulario_modalidade(request):
         'form_modalidade': form_modalidade,
     }
 
-    return render(request, 'modalidade.html', context)
+    return render(request, 'forms/modalidade.html', context)
 
 def formulario_nivel_formacao(request):
     form_nivel = NivelFormacaoForm()
@@ -139,7 +139,7 @@ def formulario_nivel_formacao(request):
         'form_nivel': form_nivel,
     }
 
-    return render(request, 'nivel.html', context)
+    return render(request, 'forms/nivel.html', context)
 
 def cadastro(request):
-    return render(request, 'cadastro.html')
+    return render(request, 'formulario_cadastro.html')
