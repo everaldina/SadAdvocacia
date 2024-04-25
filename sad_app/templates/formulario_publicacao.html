@@ -1,43 +1,23 @@
-{% extends "base.html" %}
-{% block content %}
-    <div class="justify-content-center row w-100">
-        <div class="container-fluid bg-white shadow p-3 p-sm-5 m-5 col-9 col-sm-8 col-md-7 col-lg-6 col-xl-5 col-xll-5 rounded">
-            
-            <h3 class="text-center mb-4"> <strong>Cadastro de publicaçao</strong> </h3>
-            
-            <form>
-                {% csrf_token %}
-                
-                <div class="mb-3">
-                    {{ form_publicacao.titulo }}
+{% extends "cadastro.html" %}
+{% block form %}
+    <h3 class="text-center mb-3"> <strong>Cadastrar publicação</strong> </h3>     
+    <form>
+        {% csrf_token %}
+        
+        {% for campo in form_publicacao %}
+            <div class="mb-3">
+                {{ campo }}
+            </div>
+            {% if campo.errors %}
+                <div class="alert alert-danger">
+                    {% for error in campo.errors %}
+                        <strong>{{ error|escape }}</strong>
+                    {% endfor %}
                 </div>
+            {% endif %}
+            {% empty %}
+        {% endfor %}
 
-                <div class="mb-3">
-                    {{ form_publicacao.fk_tipo }}
-                </div>
-
-                <div class="mb-3">
-                    {{ form_publicacao.sinopse }}
-                </div>
-
-                <div class="mb-3">
-                    {{ form_publicacao.data_publicacao }}
-                </div>
-
-                <div class="mb-3">
-                    {{ form_publicacao.img_path }}
-                </div>
-
-                <div class="mb-3">
-                    {{ form_publicacao.pdf_path }}
-                </div>
-                
-                <div class="mb-3">
-                    {{ form_publicacao.link }}
-                </div>
-
-                <button type="submit" class="btn bg-secondary">Enviar</button>
-            </form>
-        </div>
-    </div>
+        <button type="submit" class="btn bg-secondary">Enviar</button>
+    </form>
 {% endblock %}
