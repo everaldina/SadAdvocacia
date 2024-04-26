@@ -169,10 +169,10 @@ class MembroForm(forms.ModelForm):
         self.fields['nome'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Nome*', 'required': 'required'})
         self.fields['cargo'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Cargo*', 'required': 'required'})
         self.fields['socio'].widget.attrs.update({'class': 'form-check-input', 'required': 'required'})
-        self.fields['cod_oab'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Código OAB*', 'required': 'required'})
+        self.fields['cod_oab'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Código OAB'})
         self.fields['fk_nacionalidade'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Nacionalidade*', 'required': 'required'})
-        self.fields['data_nascimento'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Data de Nascimento*', 'required': 'required'})
-        self.fields['img_path'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Imagem*', 'required': 'required'})
+        self.fields['data_nascimento'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Data de Nascimento'})
+        self.fields['img_path'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Imagem'})
         
         
 class PublicacaoForm(forms.ModelForm):

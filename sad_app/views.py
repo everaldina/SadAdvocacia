@@ -63,7 +63,15 @@ def contato(request):
     return render(request, 'contato.html', context)
 
 def formulario_membro(request):
-    form_membro = MembroForm()
+    if request.method == "POST":
+        form_membro = MembroForm(request.POST)
+        if form_membro.is_valid():
+            form_membro.save()
+            print("salvou")
+            return HttpResponseRedirect(reverse('formulario_membro'))
+    else:
+        print("get")
+        form_membro = MembroForm()
 
     context = {
         'form_membro': form_membro,
@@ -89,8 +97,6 @@ def formulario_tipoPublicacao(request):
     else: 
         form_tipo_publicacao = TipoPublicacaoForm()
         
-            
-    form_tipo_publicacao = TipoPublicacaoForm()
     
     context = {
         'form_tipo_publicacao': form_tipo_publicacao,
@@ -124,7 +130,13 @@ def formulario_nacionalidade(request):
     return render(request, 'forms/nacionalidade.html', context)
 
 def formulario_cargo(request):
-    form_cargo = CargoForm()
+    if request.method == 'POST':
+        form_cargo = CargoForm(request.POST)
+        if form_cargo.is_valid():
+            form_cargo.save()
+            return HttpResponseRedirect(reverse('formulario_cargo'))
+    else:
+        form_cargo = CargoForm()
 
     context = {
         'form_cargo': form_cargo,
