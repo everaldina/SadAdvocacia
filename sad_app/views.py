@@ -72,6 +72,11 @@ def formulario_publicacao(request):
 def formulario_tipoPublicacao(request):
     form_tipo_publicacao = TipoPublicacaoForm()
     
+    if request.method == 'POST' and form_tipo_publicacao.is_valid():
+        form_tipo_publicacao.save()
+            
+    form_tipo_publicacao = TipoPublicacaoForm()
+    
     context = {
         'form_tipo_publicacao': form_tipo_publicacao,
     }
@@ -79,6 +84,11 @@ def formulario_tipoPublicacao(request):
     return render(request, 'forms/tipo_publicacao.html', context)
 
 def formulario_formacao(request):
+    form_formacao = FormacaoForm()
+    
+    if request.method == 'POST' and form_formacao.is_valid():
+        form_formacao.save()
+            
     form_formacao = FormacaoForm()
 
     context = {
@@ -134,6 +144,8 @@ def formulario_modalidade(request):
 
 def formulario_nivel_formacao(request):
     form_nivel = NivelFormacaoForm()
+    
+    
 
     context = {
         'form_nivel': form_nivel,

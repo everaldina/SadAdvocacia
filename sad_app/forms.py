@@ -10,6 +10,7 @@ from .models import Cargo
 from .models import Membro
 from .models import Publicacao
 from .models import tipoPublicacao
+from django.contrib.auth.models import User
 
 
 class ContatoForm(forms.ModelForm):
@@ -212,3 +213,22 @@ class TipoPublicacaoForm(forms.ModelForm):
 
         self.fields['nome'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Nome*', 'required': 'required'})
 
+
+class Login(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['username', 'password']
+        labels = {
+            'username': 'Usuário',
+            'password': 'Senha'
+        }
+        widgets = {
+            'password': forms.PasswordInput()
+        }
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        
+        self.fields['username'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Usuário*', 'required': 'required'})
+        self.fields['password'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Usuário*', 'required': 'required'})
+        
