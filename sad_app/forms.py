@@ -115,8 +115,8 @@ class FormacaoForm(forms.ModelForm):
         self.fields['fk_membro'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Membro*', 'required': 'required'})
         self.fields['fk_curso'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Curso*', 'required': 'required'})
         self.fields['ano_entrada'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Ano de Entrada*', 'required': 'required'})
-        self.fields['ano_conclusao'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Ano de Conclusão*', 'required': 'required'})
-        self.fields['titulo_tese'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Título da Tese*', 'required': 'required'})
+        self.fields['ano_conclusao'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Ano de Conclusão'})
+        self.fields['titulo_tese'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Título da Tese'})
         
 class NacionalidadeForm(forms.ModelForm):
     class Meta:

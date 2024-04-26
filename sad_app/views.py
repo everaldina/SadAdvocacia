@@ -2,6 +2,8 @@ from django.shortcuts import render
 
 from sad_app.models import Publicacao, tipoPublicacao, Cargo
 from sad_app.forms import *
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 
 # Create your views here.
 def home(request):
@@ -70,10 +72,14 @@ def formulario_publicacao(request):
     return render(request, 'forms/publicacao.html', context)
 
 def formulario_tipoPublicacao(request):
-    form_tipo_publicacao = TipoPublicacaoForm()
-    
-    if request.method == 'POST' and form_tipo_publicacao.is_valid():
-        form_tipo_publicacao.save()
+    if request.method == 'POST':
+        form_tipo_publicacao = TipoPublicacaoForm(request.POST)
+        if form_tipo_publicacao.is_valid():
+            form_tipo_publicacao.save()
+            return HttpResponseRedirect(reverse('formulario_tipo_publicacao'))
+    else: 
+        form_tipo_publicacao = TipoPublicacaoForm()
+        
             
     form_tipo_publicacao = TipoPublicacaoForm()
     
@@ -84,12 +90,14 @@ def formulario_tipoPublicacao(request):
     return render(request, 'forms/tipo_publicacao.html', context)
 
 def formulario_formacao(request):
-    form_formacao = FormacaoForm()
-    
-    if request.method == 'POST' and form_formacao.is_valid():
-        form_formacao.save()
-            
-    form_formacao = FormacaoForm()
+    if request.method == 'POST':
+        form_formacao = FormacaoForm(request.POST)
+        if form_formacao.is_valid():
+            form_formacao.save()
+            return HttpResponseRedirect(reverse('formulario_formacao'))
+    else:
+        form_formacao = FormacaoForm()
+        
 
     context = {
         'form_formacao': form_formacao,
