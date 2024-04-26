@@ -214,7 +214,7 @@ class TipoPublicacaoForm(forms.ModelForm):
         self.fields['nome'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Nome*', 'required': 'required'})
 
 
-class Login(forms.ModelForm):
+class LoginForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ['username', 'password']
@@ -230,5 +230,5 @@ class Login(forms.ModelForm):
         super().__init__(*args, **kwargs)
         
         self.fields['username'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Usuário*', 'required': 'required'})
-        self.fields['password'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Usuário*', 'required': 'required'})
+        self.fields['password'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Senha*', 'required': 'required'})
         

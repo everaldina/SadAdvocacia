@@ -4,11 +4,13 @@ from sad_app.models import Publicacao, tipoPublicacao, Cargo
 from sad_app.forms import *
 from django.http import HttpResponseRedirect
 from django.urls import reverse
+from django.contrib.auth import authenticate, login as auth_login
 
 # Create your views here.
 def home(request):
     cargos = Cargo.objects.all()
     equipe_por_cargo = {}
+        
     
     for cargo in cargos:
         equipe_por_cargo[cargo] = cargo.membro_set.all()
@@ -22,6 +24,13 @@ def home(request):
     }
 
     return render(request, 'index.html', context)
+
+def login(request):
+    if request.method == "POST":
+        user = authenticate(request.POST['username'], request.POST['password'])
+        if user:
+            auth_login(request, user)
+            HttpResponseRedirect(reverse('home'))
 
 def publicacoes(request):    
     tipoLivro = tipoPublicacao.objects.get(nome = 'Livro')
