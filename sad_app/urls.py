@@ -17,4 +17,6 @@ urlpatterns = [
     path('cadastro/modalidade', views.formulario_modalidade, name='formulario_modalidade'),
     path('cadastro', views.cadastro, name='cadastro'),
     path('login', views.login, name='login'),
+    path('logout', views.logout, name='logout'),
+    path('cadastro-usuario', views.cadastro_usuario, name='cadastro_usuario'),
 ]

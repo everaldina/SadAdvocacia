@@ -4,7 +4,7 @@ from sad_app.models import Publicacao, tipoPublicacao, Cargo
 from sad_app.forms import *
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-from django.contrib.auth import authenticate, login as auth_login
+from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 
 # Create your views here.
 def home(request):
@@ -33,11 +33,50 @@ def login(request):
         }
 
         return render(request, 'login.html', context=context)
+    
     if request.method == "POST":
-        user = authenticate(request.POST['username'], request.POST['password'])
+        user = authenticate(username=request.POST['username'], password=request.POST['password'])
+
         if user:
             auth_login(request, user)
-            HttpResponseRedirect(reverse('home'))
+            return HttpResponseRedirect(reverse('home'))
+        
+        form_login = LoginForm(request.POST)
+
+        context = {
+            'form_login': form_login,
+        }
+        
+        return render(request, 'login.html', context=context)
+    
+def logout(request):
+    auth_logout(request)
+
+    return HttpResponseRedirect(reverse('login'))
+
+def cadastro_usuario(request):
+    if request.method == "GET":
+        form_cadastro = CadastroUsuarioForm()
+
+        context = {
+            'form_cadastro_usuario': form_cadastro,
+        }
+
+        return render(request, 'cadastro-usuario.html', context=context)
+    
+    if request.method == "POST":
+        form_cadastro = CadastroUsuarioForm(request.POST)
+
+        if form_cadastro.is_valid():
+            form_cadastro.save()
+
+            return HttpResponseRedirect(reverse('login'))
+
+        context = {
+            'form_cadastro': form_cadastro,
+        }
+
+        return render(request, 'cadastro-usuario.html', context=context)
 
 def publicacoes(request):    
     tipoLivro = tipoPublicacao.objects.get(nome = 'Livro')
