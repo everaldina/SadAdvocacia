@@ -10,7 +10,6 @@ from django.contrib.auth import authenticate, login as auth_login
 def home(request):
     cargos = Cargo.objects.all()
     equipe_por_cargo = {}
-        
     
     for cargo in cargos:
         equipe_por_cargo[cargo] = cargo.membro_set.all()
@@ -26,6 +25,14 @@ def home(request):
     return render(request, 'index.html', context)
 
 def login(request):
+    if request.method == "GET":
+        form_login = LoginForm()
+
+        context = {
+            'form_login': form_login,
+        }
+
+        return render(request, 'login.html', context=context)
     if request.method == "POST":
         user = authenticate(request.POST['username'], request.POST['password'])
         if user:
@@ -162,8 +169,6 @@ def formulario_modalidade(request):
 def formulario_nivel_formacao(request):
     form_nivel = NivelFormacaoForm()
     
-    
-
     context = {
         'form_nivel': form_nivel,
     }
