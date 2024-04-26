@@ -152,7 +152,7 @@ class CargoForm(forms.ModelForm):
 class MembroForm(forms.ModelForm):
     class Meta:
         model = Membro
-        fields = ['nome', 'cargo', 'socio', 'cod_oab', 'fk_nacionalidade', 'fk_nacionalidade', 'data_nascimento', 'img_path']
+        fields = ['nome', 'cargo', 'cod_oab', 'fk_nacionalidade', 'fk_nacionalidade', 'data_nascimento', 'img_path', 'socio']
         labels = {
             'nome': 'Nome',
             'cargo': 'Cargo',
@@ -168,7 +168,7 @@ class MembroForm(forms.ModelForm):
 
         self.fields['nome'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Nome*', 'required': 'required'})
         self.fields['cargo'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Cargo*', 'required': 'required'})
-        self.fields['socio'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Sócio*', 'required': 'required'})
+        self.fields['socio'].widget.attrs.update({'class': 'form-check-input', 'required': 'required'})
         self.fields['cod_oab'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Código OAB*', 'required': 'required'})
         self.fields['fk_nacionalidade'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Nacionalidade*', 'required': 'required'})
         self.fields['data_nascimento'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Data de Nascimento*', 'required': 'required'})
