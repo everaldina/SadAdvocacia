@@ -93,7 +93,13 @@ def publicacoes(request):
     return render(request, 'publicacoes.html', context)
 
 def contato(request):
-    form = ContatoForm()
+    if request.method == "POST":    
+        form = ContatoForm()
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse("contato"))
+    else:
+        form = ContatoForm()
 
     if request.method == 'POST':
         form = ContatoForm(request.POST)
@@ -126,6 +132,11 @@ def formulario_membro(request):
     return render(request, 'forms/membro.html', context=context)
 
 def formulario_publicacao(request):
+    if request.method == "POST":
+        form_publicacao = PublicacaoForm(request.POST)
+        if form_publicacao.is_valid():
+            form_publicacao.save()
+            return HttpResponseRedirect(reverse("formulario_publicacao"))
     form_publicacao = PublicacaoForm()
     
     context = {
@@ -167,6 +178,11 @@ def formulario_formacao(request):
     return render(request, 'forms/formacao.html', context=context)
 
 def formulario_nacionalidade(request):
+    if request.method == "POST":
+        form_nacionalidade = NacionalidadeForm(request.POST)
+        if form_nacionalidade.is_valid():
+            form_nacionalidade.save()
+            return HttpResponseRedirect(reverse("formulario_nacionalidade"))
     form_nacionalidade = NacionalidadeForm()
 
     context = {
@@ -191,7 +207,13 @@ def formulario_cargo(request):
     return render(request, 'forms/cargo.html', context)
 
 def formulario_instituicao(request):
-    form_instituicao = InstituicaoForm()
+    if request.method == 'POST':
+        form_instituicao = InstituicaoForm(request.POST)
+        if form_instituicao.is_valid():
+            form_instituicao.save()
+            return HttpResponseRedirect(reverse('formulario_instituicao'))
+    else:
+        form_instituicao = InstituicaoForm()
 
     context = {
         'form_instituicao': form_instituicao,
@@ -200,7 +222,13 @@ def formulario_instituicao(request):
     return render(request, 'forms/instituicao.html', context)
 
 def formulario_curso(request):
-    form_curso = CursoForm()
+    if request.method == 'POST':
+        form_curso = CursoForm(request.POST)
+        if form_curso.is_valid():
+            form_curso.save()
+            return HttpResponseRedirect(reverse('formulario_curso'))
+    else:
+        form_curso = CursoForm()
 
     context = {
         'form_curso': form_curso,
@@ -209,7 +237,13 @@ def formulario_curso(request):
     return render(request, 'forms/curso.html', context)
 
 def formulario_modalidade(request):
-    form_modalidade = ModalidadeForm()
+    if request.method == 'POST':
+        form_modalidade = ModalidadeForm(request.POST)
+        if form_modalidade.is_valid():
+            form_modalidade.save()
+            return HttpResponseRedirect(reverse('formulario_modalidade'))
+    else:
+        form_modalidade = ModalidadeForm()
 
     context = {
         'form_modalidade': form_modalidade,
@@ -218,7 +252,13 @@ def formulario_modalidade(request):
     return render(request, 'forms/modalidade.html', context)
 
 def formulario_nivel_formacao(request):
-    form_nivel = NivelFormacaoForm()
+    if request.method == "POST":
+        form_nivel = NivelFormacaoForm(request.POST)
+        if form_nivel.is_valid():
+            form_nivel.save()
+            return HttpResponseRedirect(reverse('formulario_nivel_formacao'))
+    else:
+        form_nivel = NivelFormacaoForm()
     
     context = {
         'form_nivel': form_nivel,

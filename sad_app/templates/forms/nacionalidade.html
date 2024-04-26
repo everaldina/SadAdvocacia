@@ -2,7 +2,7 @@
 {% block form %}
     <h3 class="text-center mb-4"> <strong>Cadastrar Nacionalidade</strong> </h3>
     
-    <form>
+    <form action="{% url 'formulario_nacionalidade' %}" method="post">
         {% csrf_token %}
         
         {% for campo in form_nacionalidade %}
