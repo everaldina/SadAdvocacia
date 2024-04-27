@@ -75,9 +75,9 @@ class CursoForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
 
         self.fields['nome'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Nome*', 'required': 'required'})
-        self.fields['fk_instituicao'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Instituição*', 'required': 'required'})
-        self.fields['fk_modalidade'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Modalidade*', 'required': 'required'})
-        self.fields['fk_nivel'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Nível de Formação*', 'required': 'required'})
+        self.fields['fk_instituicao'].widget.attrs.update({'class': 'form-select', 'placeholder': 'Instituição*', 'required': 'required'})
+        self.fields['fk_modalidade'].widget.attrs.update({'class': 'form-select', 'placeholder': 'Modalidade*', 'required': 'required'})
+        self.fields['fk_nivel'].widget.attrs.update({'class': 'form-select', 'placeholder': 'Nível de Formação*', 'required': 'required'})
 
 
 class InstituicaoForm(forms.ModelForm):
@@ -112,8 +112,8 @@ class FormacaoForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        self.fields['fk_membro'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Membro*', 'required': 'required'})
-        self.fields['fk_curso'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Curso*', 'required': 'required'})
+        self.fields['fk_membro'].widget.attrs.update({'class': 'form-select', 'placeholder': 'Membro*', 'required': 'required'})
+        self.fields['fk_curso'].widget.attrs.update({'class': 'form-select', 'placeholder': 'Curso*', 'required': 'required'})
         self.fields['ano_entrada'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Ano de Entrada*', 'required': 'required'})
         self.fields['ano_conclusao'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Ano de Conclusão'})
         self.fields['titulo_tese'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Título da Tese'})
@@ -152,7 +152,7 @@ class CargoForm(forms.ModelForm):
 class MembroForm(forms.ModelForm):
     class Meta:
         model = Membro
-        fields = ['nome', 'cargo', 'cod_oab', 'fk_nacionalidade', 'fk_nacionalidade', 'data_nascimento', 'img_path', 'socio']
+        fields = ['nome', 'cargo', 'cod_oab', 'fk_nacionalidade',  'data_nascimento', 'img_path', 'socio']
         labels = {
             'nome': 'Nome',
             'cargo': 'Cargo',
@@ -170,7 +170,7 @@ class MembroForm(forms.ModelForm):
         self.fields['cargo'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Cargo*', 'required': 'required'})
         self.fields['socio'].widget.attrs.update({'class': 'form-check-input', 'required': 'required'})
         self.fields['cod_oab'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Código OAB'})
-        self.fields['fk_nacionalidade'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Nacionalidade*', 'required': 'required'})
+        self.fields['fk_nacionalidade'].widget.attrs.update({'class': 'form-select', 'placeholder': 'Nacionalidade*', 'required': 'required'})
         self.fields['data_nascimento'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Data de Nascimento'})
         self.fields['img_path'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Imagem'})
         
