@@ -21,15 +21,8 @@
                 {% endif %}
                 {% empty %}
             {% endfor %}
-
-            {% if form_login.errors %}
-                <div class="alert alert-danger">
-                    {% for error in form_login.errors %}
-                        <strong>{{ error|escape }}</strong>
-                    {% endfor %}
-                </div>
-            {% endif %}
-            <button type="submit" class="btn bg-success text-white">Logar</button>
+            
+            <button type="submit" class="btn bg-success text-white">Cadastrar</button>
         </form>
     </div>
 </div>

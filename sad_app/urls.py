@@ -19,4 +19,7 @@ urlpatterns = [
     path('login', views.login, name='login'),
     path('logout', views.logout, name='logout'),
     path('cadastro-usuario', views.cadastro_usuario, name='cadastro_usuario'),
+    path('perfil', views.perfil, name='perfil'),
+    path('editar-perfil', views.editar_perfil, name='editar_perfil'),
+    path('encerrar-conta', views.encerrar_conta, name='encerrar_conta'),
 ]

@@ -5,6 +5,7 @@ from sad_app.forms import *
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
+from django.contrib.auth.hashers import make_password
 
 # Create your views here.
 def home(request):
@@ -24,35 +25,6 @@ def home(request):
 
     return render(request, 'index.html', context)
 
-def login(request):
-    if request.method == "GET":
-        form_login = LoginForm()
-
-        context = {
-            'form_login': form_login,
-        }
-
-        return render(request, 'login.html', context=context)
-    
-    if request.method == "POST":
-        user = authenticate(username=request.POST['username'], password=request.POST['password'])
-
-        if user:
-            auth_login(request, user)
-            return HttpResponseRedirect(reverse('home'))
-        
-        form_login = LoginForm(request.POST)
-
-        context = {
-            'form_login': form_login,
-        }
-        
-        return render(request, 'login.html', context=context)
-    
-def logout(request):
-    auth_logout(request)
-
-    return HttpResponseRedirect(reverse('login'))
 
 def cadastro_usuario(request):
     if request.method == "GET":
@@ -65,18 +37,57 @@ def cadastro_usuario(request):
         return render(request, 'cadastro-usuario.html', context=context)
     
     if request.method == "POST":
-        form_cadastro = CadastroUsuarioForm(request.POST)
+        request_data = request.POST.copy()
+        request_data['password'] = make_password(request_data['password'])
+        form_cadastro = CadastroUsuarioForm(request_data)
 
         if form_cadastro.is_valid():
             form_cadastro.save()
 
             return HttpResponseRedirect(reverse('login'))
 
+        form_cadastro.add_error(None, 'Erro ao cadastrar usuário')
+
         context = {
-            'form_cadastro': form_cadastro,
+            'form_cadastro_usuario': form_cadastro,
         }
 
         return render(request, 'cadastro-usuario.html', context=context)
+    
+def login(request):
+    if request.method == "GET":
+        form_login = LoginForm()
+
+        context = {
+            'form_login': form_login,
+        }
+
+        return render(request, 'login.html', context=context)
+    
+    if request.method == "POST":
+        user = authenticate(username=request.POST['username'], password=request.POST['password'])
+        
+        if user:
+            auth_login(request, user)
+            return HttpResponseRedirect(reverse('home'))
+        
+        form_login = LoginForm(request.POST)
+
+        form_login.add_error(None, ['Usuário ou senha inválidos'])
+        
+        for error in form_login.errors:
+            print(error)
+
+        context = {
+            'form_login': form_login,
+        }
+        
+        return render(request, 'login.html', context=context)
+    
+def logout(request):
+    auth_logout(request)
+
+    return HttpResponseRedirect(reverse('login'))
 
 def publicacoes(request):    
     tipoLivro = tipoPublicacao.objects.get(nome = 'Livro')
@@ -268,3 +279,45 @@ def formulario_nivel_formacao(request):
 
 def cadastro(request):
     return render(request, 'cadastro.html')
+
+def perfil(request):
+    user = request.user
+
+    if not user.is_authenticated:
+        return HttpResponseRedirect(reverse('login'))
+    
+    user_form = CadastroUsuarioForm(instance=user)
+
+    context = {
+        'user_form': user_form,
+    }
+    
+    return render(request, 'perfil.html', context=context)
+
+def editar_perfil(request):
+    if request.method == 'POST':
+        user = User.objects.get(id=request.user.id)
+
+        request_copy = request.POST.copy()
+
+        request_copy['password'] = user.password
+
+        user_form = CadastroUsuarioForm(data=request_copy, instance=user)
+
+        if user_form.is_valid():
+            user_form.save()
+            return HttpResponseRedirect(reverse('perfil'))
+        
+        context = {
+            'user_form': user_form,
+        }
+        
+        return render(request, 'perfil.html', context=context)
+
+    return HttpResponseRedirect(reverse('perfil'))
+
+def encerrar_conta(request):
+    request.user.delete()
+    auth_logout(request)
+
+    return HttpResponseRedirect(reverse('login'))
