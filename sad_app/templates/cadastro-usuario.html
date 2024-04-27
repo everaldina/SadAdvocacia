@@ -4,11 +4,11 @@
 <link rel="stylesheet" href="{% static 'style/contato.css' %}">
 <div class="justify-content-center row w-100">
     <div class="container-fluid bg-white shadow p-3 p-sm-5 m-5 col-9 col-sm-8 col-md-7 col-lg-6 col-xl-5 col-xll-5 rounded">
-        <h3 class="text-center mb-3"> <strong>Login</strong> </h3>     
-        <form action="{% url 'login'%}" method="post">
+        <h3 class="text-center mb-3"> <strong>Cadastro</strong> </h3>     
+        <form action="{% url 'cadastro_usuario'%}" method="post">
             {% csrf_token %}
             
-            {% for campo in form_login %}
+            {% for campo in form_cadastro_usuario %}
                 <div class="mb-3">
                     {{ campo }}
                 </div>
@@ -22,18 +22,13 @@
                 {% empty %}
             {% endfor %}
 
-            {% comment %} {% if form_login.errors %}
+            {% if form_login.errors %}
                 <div class="alert alert-danger">
                     {% for error in form_login.errors %}
                         <strong>{{ error|escape }}</strong>
                     {% endfor %}
                 </div>
-            {% endif %} {% endcomment %}
-
-            <div class="mb-3">
-                <a href="{% url 'cadastro_usuario' %}">Não tem uma conta? Cadastre-se</a>
-            </div>
-
+            {% endif %}
             <button type="submit" class="btn bg-success text-white">Logar</button>
         </form>
     </div>
