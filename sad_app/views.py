@@ -279,3 +279,45 @@ def formulario_nivel_formacao(request):
 
 def cadastro(request):
     return render(request, 'cadastro.html')
+
+def perfil(request):
+    user = request.user
+
+    if not user.is_authenticated:
+        return HttpResponseRedirect(reverse('login'))
+    
+    user_form = CadastroUsuarioForm(instance=user)
+
+    context = {
+        'user_form': user_form,
+    }
+    
+    return render(request, 'perfil.html', context=context)
+
+def editar_perfil(request):
+    if request.method == 'POST':
+        user = User.objects.get(id=request.user.id)
+
+        request_copy = request.POST.copy()
+
+        request_copy['password'] = user.password
+
+        user_form = CadastroUsuarioForm(data=request_copy, instance=user)
+
+        if user_form.is_valid():
+            user_form.save()
+            return HttpResponseRedirect(reverse('perfil'))
+        
+        context = {
+            'user_form': user_form,
+        }
+        
+        return render(request, 'perfil.html', context=context)
+
+    return HttpResponseRedirect(reverse('perfil'))
+
+def encerrar_conta(request):
+    request.user.delete()
+    auth_logout(request)
+
+    return HttpResponseRedirect(reverse('login'))
