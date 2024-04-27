@@ -21,14 +21,14 @@
                 {% endif %}
                 {% empty %}
             {% endfor %}
-
-            {% comment %} {% if form_login.errors %}
+            
+            {% if form_login.non_field_errors %}
                 <div class="alert alert-danger">
-                    {% for error in form_login.errors %}
+                    {% for error in form_login.non_field_errors %}
                         <strong>{{ error|escape }}</strong>
                     {% endfor %}
                 </div>
-            {% endif %} {% endcomment %}
+            {% endif %}
 
             <div class="mb-3">
                 <a href="{% url 'cadastro_usuario' %}">Não tem uma conta? Cadastre-se</a>
