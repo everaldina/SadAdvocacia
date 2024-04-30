@@ -1,0 +1,27 @@
+{% extends "cadastro.html" %}
+{% block form %}
+    <h3 class="text-center mb-4"> <strong>Cadastrar Membro</strong> </h3>
+
+    <form action="{% url 'formulario_membro' %}" method="post">
+        {% csrf_token %}
+        
+        {% for campo in form_membro %}
+            <div class="mb-3">
+                {% if campo.id_for_label == 'id_socio' %}
+                    <label for="{{ campo.id_for_label }}">{{ campo.label_tag }}</label> 
+                {% endif %}
+                {{ campo }}
+            </div>
+            {% if campo.errors %}
+                <div class="alert alert-danger">
+                    {% for error in campo.errors %}
+                        <strong>{{ error|escape }}</strong>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% empty %}
+        {% endfor %}
+        <button type="submit" class="btn bg-success text-white">Enviar</button>
+    </form>
+            
+{% endblock %}

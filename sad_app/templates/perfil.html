@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'style/contato.css' %}">
+<div class="justify-content-center row w-100">
+    <div class="container-fluid bg-white shadow p-3 p-sm-5 m-5 col-9 col-sm-8 col-md-7 col-lg-6 col-xl-5 col-xll-5 rounded">
+        <h3 class="text-center mb-3"> <strong>Perfil</strong> </h3>     
+        <form action="{% url 'editar_perfil'%}" method="POST">
+            {% csrf_token %}
+            
+            {% for campo in user_form %}
+                {% if campo.name != 'password' %} 
+                    <div class="mb-3">
+                        {{ campo }}
+                    </div>
+                    {% if campo.errors %}
+                    <div class="alert alert-danger">
+                        {% for error in campo.errors %}
+                        <strong>{{ error|escape }}</strong>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                {% endif %}
+            {% empty %}
+            {% endfor %}
+            
+            {% if user_form.non_field_errors %}
+                <div class="alert alert-danger">
+                    {% for error in user_form.non_field_errors %}
+                        <strong>{{ error|escape }}</strong>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <button type="submit" class="btn bg-success text-white">Atualizar Perfil</button>
+            
+            <a href="{% url 'encerrar_conta' %}" class="text-danger ">Encerrar conta</a>
+
+        </form>
+    </div>
+</div>
+{% endblock %}

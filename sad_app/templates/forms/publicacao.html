@@ -1,0 +1,23 @@
+{% extends "cadastro.html" %}
+{% block form %}
+    <h3 class="text-center mb-3"> <strong>Cadastrar publicação</strong> </h3>     
+    <form action="{% url 'formulario_publicacao' %}" method="post">
+        {% csrf_token %}
+        
+        {% for campo in form_publicacao %}
+            <div class="mb-3">
+                {{ campo }}
+            </div>
+            {% if campo.errors %}
+                <div class="alert alert-danger">
+                    {% for error in campo.errors %}
+                        <strong>{{ error|escape }}</strong>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            {% empty %}
+        {% endfor %}
+
+        <button type="submit" class="btn bg-success text-white">Enviar</button>
+    </form>
+{% endblock %}

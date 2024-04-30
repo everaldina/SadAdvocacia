@@ -23,10 +23,17 @@
   {% for cargo, membros in equipe_por_cargo.items%}
     <div class="{{cargo}}-container">
       <h4 class="text-center text-secondary mt-3">{{cargo}}s</h4>
+<<<<<<< HEAD
       <div class="{{cargo}}-list container justify-content-center">
         {%for m in membros%}
           {% if forloop.counter0|divisibleby:4 %}
             <div class="row justify-content-center">
+=======
+      <div class="{{cargo}}-list container">
+        {%for m in membros%}
+          {% if forloop.counter0|divisibleby:4 %}
+          <div class="row justify-content-center">
+>>>>>>> 6681d1ff08b3228a8bc4fd5f4cc6294107c3141d
           {% endif %}
           <div class="card bg-dark col-sm-12 col-md-3 m-1 m-md-4" style="width: 11rem">
             {% load custom_filters %} 
@@ -49,8 +56,7 @@
                 class="btn bg-secondary"
                 data-bs-toggle="modal"
                 data-bs-target="#{{m.id}}Backdrop"
-                >{{m.nome_modificado}}</a
-              >
+                >{{m.nome_modificado}}</a>
             </div>
             <div
               class="modal fade"
@@ -90,13 +96,13 @@
                       <ul class="formacao-list">
                         <li>
                           {% for formacao in m.formacao_ordenadas%}
-                            <p class="mb-0">{{formacao.instituicao}}</p>
+                            <p class="mb-0">
+                              <strong>{{ formacao.fk_curso.fk_nivel }} em {{ formacao.fk_curso.nome }} ({{ formacao.fk_curso.fk_modalidade }})</strong>
+                            </p>
+                            <p class="mb-0">{{ formacao.fk_curso.fk_instituicao.sigla }} - {{ formacao.fk_curso.fk_instituicao }}</p>
                             <p class="mb-0">
                               {{formacao.ano_entrada}} -
                               {{formacao.ano_conclusao|default_if_none:''}}
-                            </p>
-                            <p class="mb-0">
-                              {{formacao.get_nivel_formacao_display}}: {{formacao.nome_curso}} ({{ formacao.get_modalidade_display}})
                             </p>
                             <p class="mb-0">Tese: "{{formacao.titulo_tese}}"</p>
                           {% endfor%}
@@ -109,7 +115,11 @@
             </div>
           </div>
           {% if forloop.counter|divisibleby:4 or forloop.last %}
+<<<<<<< HEAD
             </div>
+=======
+          </div>
+>>>>>>> 6681d1ff08b3228a8bc4fd5f4cc6294107c3141d
           {% endif %}
           {% empty %}
           <p>Nenhum consultor cadastrado</p>

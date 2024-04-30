@@ -13,5 +13,9 @@
 }
 
 .card:hover {
+<<<<<<< HEAD
+=======
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+>>>>>>> 6681d1ff08b3228a8bc4fd5f4cc6294107c3141d
     cursor: pointer;
 }

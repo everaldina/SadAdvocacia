@@ -1,0 +1,79 @@
+{% extends "base.html"%}
+
+{% block content %}
+{% load static%}
+<div class="container m-0">
+    <div class="row">
+        <div class="col-2 border min-vh-100 ml-2 d-flex">
+            <ul class="nav nav-pills text-center flex-column flex-column flex-grow-1">
+                <li class="nav-item">
+                    <a class="nav-link {% if request.resolver_match.url_name == 'formulario_membro' %} active {% endif %}" 
+                        href="{% url 'formulario_membro' %}" aria-current="page" href="#">
+                        Membro
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if request.resolver_match.url_name == 'formulario_nacionalidade' %} active {% endif %}" 
+                        href="{% url 'formulario_nacionalidade' %}" aria-current="page" href="#">
+                        Nacionalidade
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if request.resolver_match.url_name == 'formulario_publicacao' %} active {% endif %}" 
+                        href="{% url 'formulario_publicacao' %}" aria-current="page" href="#">
+                        Publicação
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if request.resolver_match.url_name == 'formulario_tipo_publicacao' %} active {% endif %}" 
+                        href="{% url 'formulario_tipo_publicacao' %}" aria-current="page" href="#">
+                        Tipo de Publicação
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if request.resolver_match.url_name == 'formulario_formacao' %} active {% endif %}" 
+                        href="{% url 'formulario_formacao' %}" aria-current="page" href="#">
+                        Formação
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if request.resolver_match.url_name == 'formulario_curso' %} active {% endif %}" 
+                        href="{% url 'formulario_curso' %}" aria-current="page" href="#">
+                        Curso
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if request.resolver_match.url_name == 'formulario_instituicao' %} active {% endif %}" 
+                        href="{% url 'formulario_instituicao' %}" aria-current="page" href="#">
+                        Instituição
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if request.resolver_match.url_name == 'formulario_nivel_formacao' %} active {% endif %}" 
+                        href="{% url 'formulario_nivel_formacao' %}" aria-current="page" href="#">
+                        Nivel de Formação
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if request.resolver_match.url_name == 'formulario_modalidade' %} active {% endif %}" 
+                        href="{% url 'formulario_modalidade' %}" aria-current="page" href="#">
+                        Modalidade
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if request.resolver_match.url_name == 'formulario_cargo' %} active {% endif %}" 
+                        href="{% url 'formulario_cargo' %}" aria-current="page" href="#">
+                        Cargo
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+
+        <div class="col-10 px-5 py-3">
+            {% block form %}
+            {% endblock %}
+        </div>
+    </div>
+</div>
+{% endblock %}
