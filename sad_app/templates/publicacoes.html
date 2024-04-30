@@ -12,11 +12,7 @@
           {% if forloop.counter0|divisibleby:3 %}
           <div class="carousel-item {% if forloop.first %}active{% endif %}">
           {% endif %}
-<<<<<<< HEAD
-              <div class="card d-inline-flex mx-5 my-3" style="width: 13rem;" data-bs-toggle="modal" data-bs-target="#sinopseModal{{livro.id}}">
-=======
               <div class="card d-inline-flex mx-5 mx-sm-1 mx-md-3 mx-lg-5 my-3" style="width: 13rem;" data-bs-toggle="modal" data-bs-target="#modalPublicacao{{livro.id}}">
->>>>>>> 6681d1ff08b3228a8bc4fd5f4cc6294107c3141d
                   <img src="{% static livro.img_path %}" class="card-img-top" alt="...">
                   <div class="card-body">
                       <h5 class="card-title" >{{ livro }}</h5>
