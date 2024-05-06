@@ -4,7 +4,7 @@
 
 .card-img{
     width: 100%;
-    height: 30rem;
+    height: 20rem;
     object-fit: cover;
     object-position: center top;
 }
@@ -24,4 +24,5 @@ body {
     object-fit: cover;
     object-position: top;
     height: auto;
+    max-width: 100%;
 }
