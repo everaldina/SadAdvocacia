@@ -126,6 +126,11 @@ def contato(request):
     return render(request, 'contato.html', context)
 
 def formulario_membro(request):
+    user = request.user
+
+    if not user.is_authenticated:
+        return HttpResponseRedirect(reverse('login'))
+    
     if request.method == "POST":
         form_membro = MembroForm(request.POST)
         if form_membro.is_valid():
@@ -143,6 +148,11 @@ def formulario_membro(request):
     return render(request, 'forms/membro.html', context=context)
 
 def formulario_publicacao(request):
+    user = request.user
+
+    if not user.is_authenticated:
+        return HttpResponseRedirect(reverse('login'))
+    
     if request.method == "POST":
         form_publicacao = PublicacaoForm(request.POST)
         if form_publicacao.is_valid():
@@ -157,6 +167,11 @@ def formulario_publicacao(request):
     return render(request, 'forms/publicacao.html', context)
 
 def formulario_tipoPublicacao(request):
+    user = request.user
+
+    if not user.is_authenticated:
+        return HttpResponseRedirect(reverse('login'))
+    
     if request.method == 'POST':
         form_tipo_publicacao = TipoPublicacaoForm(request.POST)
         if form_tipo_publicacao.is_valid():
@@ -173,6 +188,11 @@ def formulario_tipoPublicacao(request):
     return render(request, 'forms/tipo_publicacao.html', context)
 
 def formulario_formacao(request):
+    user = request.user
+
+    if not user.is_authenticated:
+        return HttpResponseRedirect(reverse('login'))
+    
     if request.method == 'POST':
         form_formacao = FormacaoForm(request.POST)
         if form_formacao.is_valid():
@@ -189,6 +209,11 @@ def formulario_formacao(request):
     return render(request, 'forms/formacao.html', context=context)
 
 def formulario_nacionalidade(request):
+    user = request.user
+
+    if not user.is_authenticated:
+        return HttpResponseRedirect(reverse('login'))
+    
     if request.method == "POST":
         form_nacionalidade = NacionalidadeForm(request.POST)
         if form_nacionalidade.is_valid():
@@ -203,6 +228,11 @@ def formulario_nacionalidade(request):
     return render(request, 'forms/nacionalidade.html', context)
 
 def formulario_cargo(request):
+    user = request.user
+
+    if not user.is_authenticated:
+        return HttpResponseRedirect(reverse('login'))
+    
     if request.method == 'POST':
         form_cargo = CargoForm(request.POST)
         if form_cargo.is_valid():
@@ -218,6 +248,11 @@ def formulario_cargo(request):
     return render(request, 'forms/cargo.html', context)
 
 def formulario_instituicao(request):
+    user = request.user
+
+    if not user.is_authenticated:
+        return HttpResponseRedirect(reverse('login'))
+    
     if request.method == 'POST':
         form_instituicao = InstituicaoForm(request.POST)
         if form_instituicao.is_valid():
@@ -233,6 +268,11 @@ def formulario_instituicao(request):
     return render(request, 'forms/instituicao.html', context)
 
 def formulario_curso(request):
+    user = request.user
+
+    if not user.is_authenticated:
+        return HttpResponseRedirect(reverse('login'))
+    
     if request.method == 'POST':
         form_curso = CursoForm(request.POST)
         if form_curso.is_valid():
@@ -248,6 +288,11 @@ def formulario_curso(request):
     return render(request, 'forms/curso.html', context)
 
 def formulario_modalidade(request):
+    user = request.user
+
+    if not user.is_authenticated:
+        return HttpResponseRedirect(reverse('login'))
+    
     if request.method == 'POST':
         form_modalidade = ModalidadeForm(request.POST)
         if form_modalidade.is_valid():
@@ -263,6 +308,11 @@ def formulario_modalidade(request):
     return render(request, 'forms/modalidade.html', context)
 
 def formulario_nivel_formacao(request):
+    user = request.user
+
+    if not user.is_authenticated:
+        return HttpResponseRedirect(reverse('login'))
+    
     if request.method == "POST":
         form_nivel = NivelFormacaoForm(request.POST)
         if form_nivel.is_valid():
@@ -278,7 +328,7 @@ def formulario_nivel_formacao(request):
     return render(request, 'forms/nivel.html', context)
 
 def cadastro(request):
-    return render(request, 'cadastro.html')
+    return HttpResponseRedirect(reverse('formulario_membro'))
 
 def perfil(request):
     user = request.user
