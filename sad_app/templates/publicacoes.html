@@ -38,6 +38,24 @@
           {% if forloop.counter|divisibleby:3 or forloop.last %}
           </div>
           {% endif %}
+
+          <div class="modal fade" id="sinopseModal{{livro.id}}" tabindex="-1" data-bs-theme="light" data-bs-keyboard="false" aria-labelledby="sinopseModal" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="sinopseModal{{livro.id}}">{{ livro }}</h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <p> {{ livro.descricao }} </p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-primary">Comprar</button>
+                </div>
+              </div>
+            </div>
+          </div>          
+
           {% empty %}
             <div class="carousel-item active">
               <div class="card mx-5" style="width: 13rem;">
