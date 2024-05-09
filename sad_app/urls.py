@@ -22,5 +22,6 @@ urlpatterns = [
     path('perfil', views.perfil, name='perfil'),
     path('editar-perfil', views.editar_perfil, name='editar_perfil'),
     path('encerrar-conta', views.encerrar_conta, name='encerrar_conta'),
-    path('lista/<tabela>', views.lista_modelo, name='lista_modelo')
+    path('lista/<tabela>', views.lista_modelo, name='lista_modelo'),
+    path('painel-admin', views.painel_admin, name='painel_admin'),
 ]
