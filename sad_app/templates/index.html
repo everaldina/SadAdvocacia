@@ -30,7 +30,8 @@
         </div>
         <div class="{{cargo}}-list container justify-content-center row px-5">
           {%for m in membros%}
-            <div class="card bg-dark col-12 col-sm-8 col-md-6 col-lg-2 m-1 m-md-4">
+            <div class="card bg-dark col-sm-6 {% if membros|length|divisibleby:2 %} col-lg-4 {% else %} col-lg-3 {% endif %}">
+            
               {% load custom_filters %} 
               {% if m.img_path%}
               <img

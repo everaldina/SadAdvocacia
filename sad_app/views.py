@@ -8,6 +8,13 @@ from django.contrib.auth import authenticate, login as auth_login, logout as aut
 from django.contrib.auth.hashers import make_password
 
 # Create your views here.
+def context_(request):
+    context = {
+        'user': request.user,
+    }
+
+    return context
+
 def home(request):
     cargos = Cargo.objects.all()
     equipe_por_cargo = {}
@@ -18,7 +25,7 @@ def home(request):
     for cargo in equipe_por_cargo:
         for membro in equipe_por_cargo[cargo]:
             membro.formacao_ordenadas = membro.formacao_set.all().order_by('ano_entrada')
-    
+
     context = {
         'equipe_por_cargo': equipe_por_cargo
     }
@@ -367,7 +374,38 @@ def editar_perfil(request):
     return HttpResponseRedirect(reverse('perfil'))
 
 def encerrar_conta(request):
-    request.user.delete()
+    # request.user.delete()
+    request.user.is_active = False
+
     auth_logout(request)
 
     return HttpResponseRedirect(reverse('login'))
+
+def painel_admin(request):
+    user = request.user
+
+    if not user.is_authenticated:
+        return HttpResponseRedirect(reverse('login'))
+    
+    if not user.is_staff:
+        return HttpResponseRedirect(reverse('home'))
+    
+    context = context_(request)
+
+    tables = {
+        'membro': ['formulario_membro'],
+        'publicacao': 'formulario_publicacao',
+        'tipo_publicacao': 'formulario_tipo_publicacao',
+        'formacao': 'formulario_formacao',
+        'nacionalidade': 'formulario_nacionalidade',
+        'cargo': 'formulario_cargo',
+        'instituicao': 'formulario_instituicao',
+        'curso': 'formulario_curso',
+        'modalidade': 'formulario_modalidade',
+        'nivel_formacao': 'formulario_nivel_formacao',
+        
+    }
+
+    context['tables'] = tables
+
+    return render(request, 'admin/painel_admin.html', context=context)
