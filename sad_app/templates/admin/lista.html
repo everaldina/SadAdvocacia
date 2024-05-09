@@ -1,0 +1,26 @@
+{% extends "base.html"%}
+{% block content%}
+<div class="container m-0">
+    <div class="row">
+        <div class="col-2 border min-vh-100 ml-2 d-flex">
+            <ul class="nav nav-pills text-center mt-3 flex-column flex-column flex-grow-1">
+                {% for nome_bd, nome_verboso in lista_modelos.items %}
+                <li class="nav-item">
+                    <a class="nav-link {% if request.resolver_match.kwargs.tabela == nome_bd %} active {% endif %}" 
+                        href="{% url 'lista_modelo' nome_bd %}" aria-current="page" href="#">
+                        {{ nome_verboso }}
+                    </a>
+                </li>
+                {% empty %}
+                    <p>tem nada</p>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="col-10 px-5 py-3">
+            {% block lista %}
+            {% endblock %}
+        </div>
+    </div>
+</div>
+{% endblock %}

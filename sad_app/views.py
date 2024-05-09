@@ -6,6 +6,7 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.contrib.auth.hashers import make_password
+from django.apps import apps
 
 # Create your views here.
 def home(request):
@@ -371,3 +372,27 @@ def encerrar_conta(request):
     auth_logout(request)
 
     return HttpResponseRedirect(reverse('login'))
+
+def lista_modelo(request, tabela):
+    nome = "sad_app_" + tabela
+    model_list = {}
+    model = None
+    for m in apps.get_models():
+        nome_tabela = m._meta.db_table
+        if nome_tabela.startswith("sad_app"):
+            model_list["".join(nome_tabela.split("_")[2:])] = m._meta.verbose_name.capitalize()
+        if nome_tabela == nome:
+            model = m
+            
+            
+    print(request.resolver_match.kwargs['tabela'])
+            
+    registros = model.objects.all()
+    context = {
+        'registros': registros,
+        'lista_modelos': model_list
+    }
+    
+    return render(request, 'admin/lista_modelo.html', context)
+    
+    
