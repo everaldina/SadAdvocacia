@@ -70,15 +70,25 @@ class CursoForm(forms.ModelForm):
             'fk_modalidade': 'Modalidade',
             'fk_nivel': 'Nível de Formação'
         }
+        widgets = {
+            'fk_instituicao': forms.Select(),
+            'fk_modalidade': forms.Select(),
+            'fk_nivel': forms.Select()
+        }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
         self.fields['nome'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Nome*', 'required': 'required'})
+        
         self.fields['fk_instituicao'].widget.attrs.update({'class': 'form-select', 'placeholder': 'Instituição*', 'required': 'required'})
+        self.fields['fk_instituicao'].empty_label = "Selecione instituição*"
+        
         self.fields['fk_modalidade'].widget.attrs.update({'class': 'form-select', 'placeholder': 'Modalidade*', 'required': 'required'})
+        self.fields['fk_modalidade'].empty_label = "Selecione modalidade*"
+        
         self.fields['fk_nivel'].widget.attrs.update({'class': 'form-select', 'placeholder': 'Nível de Formação*', 'required': 'required'})
-
+        self.fields['fk_nivel'].empty_label = "Selecione modalidade*"
 
 class InstituicaoForm(forms.ModelForm):
     class Meta:
@@ -108,15 +118,23 @@ class FormacaoForm(forms.ModelForm):
             'ano_conclusao': 'Ano de Conclusão',
             'titulo_tese': 'Título da Tese'
         }
+        widgets ={
+            'fk_membro': forms.Select(),
+            'fk_curso': forms.Select()
+        }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        self.fields['fk_membro'].widget.attrs.update({'class': 'form-select', 'placeholder': 'Membro*', 'required': 'required'})
-        self.fields['fk_curso'].widget.attrs.update({'class': 'form-select', 'placeholder': 'Curso*', 'required': 'required'})
         self.fields['ano_entrada'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Ano de Entrada*', 'required': 'required'})
         self.fields['ano_conclusao'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Ano de Conclusão'})
         self.fields['titulo_tese'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Título da Tese'})
+        
+        self.fields['fk_membro'].widget.attrs.update({'class': 'form-select', 'placeholder': 'Membro*', 'required': 'required'})
+        self.fields['fk_membro'].empty_label = 'Selecione o membro*'
+        
+        self.fields['fk_curso'].widget.attrs.update({'class': 'form-select', 'placeholder': 'Curso*', 'required': 'required'})
+        self.fields['fk_curso'].empty_label = 'Selecione o curso*'
         
 class NacionalidadeForm(forms.ModelForm):
     class Meta:
@@ -162,17 +180,28 @@ class MembroForm(forms.ModelForm):
             'data_nascimento': 'Data de Nascimento',
             'img_path': 'Imagem'
         }
+        widgets = {
+            'fk_nacionalidade': forms.Select(),
+            'cargo': forms.Select(),
+            'data_nascimento': forms.DateInput()
+        }
     
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
         self.fields['nome'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Nome*', 'required': 'required'})
-        self.fields['cargo'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Cargo*', 'required': 'required'})
-        self.fields['socio'].widget.attrs.update({'class': 'form-check-input', 'required': 'required'})
         self.fields['cod_oab'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Código OAB'})
-        self.fields['fk_nacionalidade'].widget.attrs.update({'class': 'form-select', 'placeholder': 'Nacionalidade*', 'required': 'required'})
-        self.fields['data_nascimento'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Data de Nascimento'})
         self.fields['img_path'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Imagem'})
+        self.fields['socio'].widget.attrs.update({'class': 'form-check-input'})
+        
+        self.fields['data_nascimento'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Data de Nascimento'})
+        
+        
+        self.fields['cargo'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Cargo*', 'required': 'required'})
+        self.fields['cargo'].empty_label = 'Selecione o cargo*'
+        
+        self.fields['fk_nacionalidade'].widget.attrs.update({'class': 'form-select', 'placeholder': 'Nacionalidade*', 'required': 'required'})
+        self.fields['fk_nacionalidade'].empty_label = 'Selecione a Nacionalidade*'
         
         
 class PublicacaoForm(forms.ModelForm):
@@ -188,17 +217,22 @@ class PublicacaoForm(forms.ModelForm):
             'pdf_path': 'PDF',
             'link': 'Link'
         }
+        widgets = {
+            'fk_tipo': forms.Select()
+        }
     
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
         self.fields['titulo'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Título*', 'required': 'required'})
-        self.fields['fk_tipo'].widget.attrs.update({'class': 'form-select', 'placeholder': 'Tipo*', 'required': 'required'})
         self.fields['sinopse'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Sinopse'})
         self.fields['data_publicacao'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Data de Publicação*', 'required': 'required'})
         self.fields['img_path'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Imagem'})
         self.fields['pdf_path'].widget.attrs.update({'class': 'form-control', 'placeholder': 'PDF'})
         self.fields['link'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Link'})
+        
+        self.fields['fk_tipo'].widget.attrs.update({'class': 'form-select custom-placeholder', 'placeholder': 'Tipo*', 'required': 'required'})
+        self.fields['fk_tipo'].empty_label = 'Selecione o tipo*'
         
 class TipoPublicacaoForm(forms.ModelForm):
     class Meta:
