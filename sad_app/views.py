@@ -327,7 +327,7 @@ def formulario_nivel_formacao(request):
         form_nivel = NivelFormacaoForm(request.POST)
         if form_nivel.is_valid():
             form_nivel.save()
-            return HttpResponseRedirect(reverse('formulario_nivel_formacao'))
+            return HttpResponseRedirect(reverse('formulario_nivelformacao'))
     else:
         form_nivel = NivelFormacaoForm()
     
@@ -398,6 +398,7 @@ def lista_modelo(request, tabela):
             
     registros = model.objects.all()
     context = {
+        'add': 'formulario_' + tabela,
         'registros': registros,
         'lista_modelos': model_list
     }
@@ -457,19 +458,18 @@ def painel_admin(request):
     
     context = context_(request)
 
-    tables = {
-        'membro': ['formulario_membro'],
-        'publicacao': 'formulario_publicacao',
-        'tipo_publicacao': 'formulario_tipo_publicacao',
-        'formacao': 'formulario_formacao',
-        'nacionalidade': 'formulario_nacionalidade',
-        'cargo': 'formulario_cargo',
-        'instituicao': 'formulario_instituicao',
-        'curso': 'formulario_curso',
-        'modalidade': 'formulario_modalidade',
-        'nivel_formacao': 'formulario_nivel_formacao',
-        
-    }
+    tables = [
+        'membro',
+        'publicacao',
+        'tipo_publicacao',
+        'formacao',
+        'nacionalidade'
+        'cargo',
+        'instituicao',
+        'curso',
+        'modalidade',
+        'nivel_formacao',
+    ]
 
     context['tables'] = tables
 

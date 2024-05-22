@@ -10,10 +10,19 @@
                 </li>
             {% endfor %}
         </ul>
+
+        <div class="d-flex my-4 justify-content-end">
+            <div class="col-2 text-end">
+                <a type="button" href="{% url add %}" class="btn btn-outline-info">
+                    Adcionar Novo
+                </a>
+            </div>
+        </div>
+
         <div class="d-flex my-4 justify-content-end">
             <div class="col-2 text-end">
                 <button type="submit" class="btn btn-outline-danger">
-                    Deletar
+                    Deletar Selecionados
                 </button>
             </div>
         </div>

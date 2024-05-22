@@ -6,8 +6,8 @@
         <div class="col-2 border min-vh-100 ml-2 d-flex">
             <ul class="nav nav-pills text-center mt-3 flex-column flex-column flex-grow-1">
                 <li class="nav-item">
-                    {% for table, link in tables.items %}
-                    <a class="nav-link {% if forloop.first == 1%} active {% endif %}" href="{% url link %}">{{ table }}</a>
+                    {% for table in tables %}
+                    <a class="nav-link {% if forloop.first == 1%} active {% endif %}" href="{% url 'lista_modelo' tabela=table %}">{{ table }}</a>
                     {% endfor %}
                 </li>
             </ul>

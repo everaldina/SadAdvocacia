@@ -1,7 +1,7 @@
 {% extends "cadastro.html" %}
 {% block form %}
     <h3 class="text-center mb-3"> <strong>Cadastrar nivel de formação</strong> </h3>     
-    <form action="{% url 'formulario_nivel_formacao' %}" method="post">
+    <form action="{% url 'formulario_nivelformacao' %}" method="post">
         {% csrf_token %}
         
         {% for campo in form_nivel %}
