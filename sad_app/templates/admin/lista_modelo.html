@@ -1,6 +1,6 @@
 {% extends "./lista.html"%}
 {% block lista%}
-    <form action="{% url 'deleta_registro' request.resolver_match.kwargs.tabela %}" method="post">
+    <form action="{% url 'lista_modelo' request.resolver_match.kwargs.tabela %}" method="post">
         {% csrf_token %}
         <ul class="list-group">
             {% for reg in registros%}
@@ -8,12 +8,16 @@
                     <input class="form-check-input me-1" type="checkbox" name = {{ reg }} value="{{ reg.id }}">
                     {{ reg }}
                 </li>
+                {% empty %}
+                <li class="list-group-item">
+                    Nenhum registro encontrado
+                </li>
             {% endfor %}
         </ul>
 
         <div class="d-flex my-4 justify-content-end">
             <div class="col-2 text-end">
-                <a type="button" href="{% url add %}" class="btn btn-outline-info">
+                <a type="button" href="{% url 'cadastro' %}" class="btn btn-outline-info">
                     Adcionar Novo
                 </a>
             </div>
