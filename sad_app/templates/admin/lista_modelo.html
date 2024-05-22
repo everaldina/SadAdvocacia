@@ -1,4 +1,21 @@
 {% extends "./lista.html"%}
 {% block lista%}
-    <p>teste</p>
+    <form action="{% url 'deleta_registro' request.resolver_match.kwargs.tabela %}" method="post">
+        {% csrf_token %}
+        <ul class="list-group">
+            {% for reg in registros%}
+                <li class="list-group-item">
+                    <input class="form-check-input me-1" type="checkbox" name = {{ reg }} value="{{ reg.id }}">
+                    {{ reg }}
+                </li>
+            {% endfor %}
+        </ul>
+        <div class="d-flex my-4 justify-content-end">
+            <div class="col-2 text-end">
+                <button type="submit" class="btn btn-outline-danger">
+                    Deletar
+                </button>
+            </div>
+        </div>
+    </form>
 {% endblock %}

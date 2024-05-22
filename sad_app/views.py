@@ -8,6 +8,8 @@ from django.contrib.auth import authenticate, login as auth_login, logout as aut
 from django.contrib.auth.hashers import make_password
 from django.apps import apps
 
+from django.db.models.deletion import ProtectedError
+
 # Create your views here.
 def context_(request):
     context = {
@@ -394,8 +396,6 @@ def lista_modelo(request, tabela):
             model = m
             
             
-    print(request.resolver_match.kwargs['tabela'])
-            
     registros = model.objects.all()
     context = {
         'registros': registros,
@@ -403,6 +403,47 @@ def lista_modelo(request, tabela):
     }
     
     return render(request, 'admin/lista_modelo.html', context)
+
+def deleta_registro(request, tabela):
+    list_delete = []
+    for key in request.POST:
+        if key != "csrfmiddlewaretoken":
+            list_delete.append(request.POST[key])
+    
+    
+    # procura o model da tabela
+    nome = "sad_app_" + tabela
+    model = None
+    for m in apps.get_models():
+        nome_tabela = m._meta.db_table
+        if nome_tabela == nome:
+            model = m
+    
+    # deleta os registros
+    protegidos = {}
+    try:
+        count_delete, model_deletions = model.objects.filter(id__in=list_delete).delete()
+    except ProtectedError as e:
+        for item in e.protected_objects:
+            if item.__class__.__name__ not in protegidos.keys():
+                protegidos[item.__class__.__name__] = []
+                print(item.__dict__)
+        print(e.__dict__)
+        return HttpResponseRedirect(reverse('lista_modelo', args=[tabela]))
+    
+    # verifica deleções
+    print(model)
+    tabelas_relacionadas = []
+    
+    for tbl in model_deletions:
+        print(tbl)
+    if count_delete != len(list_delete):
+        print("Alguns registros não foram deletados corretamente", count_delete)
+        print("Deletou", model_deletions)
+    else:
+        print("Deletou", count_delete)
+    
+    return HttpResponseRedirect(reverse('lista_modelo', args=[tabela]))
     
     
 def painel_admin(request):

@@ -24,4 +24,5 @@ urlpatterns = [
     path('encerrar-conta', views.encerrar_conta, name='encerrar_conta'),
     path('lista/<tabela>', views.lista_modelo, name='lista_modelo'),
     path('painel-admin', views.painel_admin, name='painel_admin'),
+    path('deleta/<tabela>', views.deleta_registro, name='deleta_registro'),
 ]
