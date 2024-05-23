@@ -630,8 +630,13 @@ def editar_registro(request, tabela, id):
             
             if len(usuario) != 0:
                 registro = usuario[0]
+            else:
+                registro = User.objects.get(id=id)
             
-            form = CadastroUserForm(request.POST, instance=registro)
+            data = request.POST.copy()
+            data['password'] = registro.password
+
+            form = CadastroUserForm(data, instance=registro)
             context['is_superuser'] = registro.is_superuser
             context['is_staff'] = registro.is_staff
             
