@@ -1,0 +1,21 @@
+{% extends "./lista.html"%}
+{% block lista%}
+    <form action="{% url 'editar_registro' tabela id %}" method="post">
+        {% csrf_token %}
+        
+        {% for campo in form %}
+            <div class="mb-3">
+                {{ campo }}
+            </div>
+            {% if campo.errors %}
+                <div class="alert alert-danger">
+                    {% for error in campo.errors %}
+                        <strong>{{ error|escape }}</strong>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            {% empty %}
+        {% endfor %}
+        <button type="submit" class="btn bg-success text-white">Enviar</button>
+    </form>
+{% endblock %}

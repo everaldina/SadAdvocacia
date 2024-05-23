@@ -457,42 +457,53 @@ def painel_admin(request):
 
 
 def editar_registro(request, tabela, id):
-    nome = "sad_app_" + tabela
-    model = None
-    for m in apps.get_models():
-        nome_tabela = m._meta.db_table
-        if nome_tabela == nome:
-            model = m
-    
-    registro = model.objects.get(id=id)
-    form = None
-    if tabela == "membro":
-        form = MembroForm(instance=registro)
-    elif tabela == "publicacao":
-        form = PublicacaoForm(instance=registro)
-    elif tabela == "tipoPublicacao":
-        form = TipoPublicacaoForm(instance=registro)
-    elif tabela == "formacao":
-        form = FormacaoForm(instance=registro)
-    elif tabela == "nacionalidade":
-        form = NacionalidadeForm(instance=registro)
-    elif tabela == "cargo":
-        form = CargoForm(instance=registro)
-    elif tabela == "instituicao":
-        form = InstituicaoForm(instance=registro)
-    elif tabela == "curso":
-        form = CursoForm(instance=registro)
-    elif tabela == "nivel_formacao":
-        form = NivelFormacaoForm(instance=registro)
-    elif tabela == "modalidade":
-        form = ModalidadeForm(instance=registro)
+    if request.method == "GET":
+        nome = "sad_app_" + tabela
+        model_list = {}
+        model = None
+        for m in apps.get_models():
+            nome_tabela = m._meta.db_table
+            if nome_tabela.startswith("sad_app") and not nome_tabela.endswith("usuario"):
+                model_list["".join(nome_tabela.split("_")[2:])] = m._meta.verbose_name.capitalize()
+            elif nome_tabela == 'auth_user':
+                model_list['usuario'] = 'Usuário'
+            if nome_tabela == nome:
+                model = m
         
-    context = {
-        'form': form,
-        'tabela': tabela,
-        'id': id,
-    }
-    
+        registro = model.objects.get(id=id)
+        form = None
+        if tabela == "membro":
+            form = MembroForm(instance=registro)
+        elif tabela == "publicacao":
+            form = PublicacaoForm(instance=registro)
+        elif tabela == "tipopublicacao":
+            form = TipoPublicacaoForm(instance=registro)
+        elif tabela == "formacao":
+            form = FormacaoForm(instance=registro)
+        elif tabela == "nacionalidade":
+            form = NacionalidadeForm(instance=registro)
+        elif tabela == "cargo":
+            form = CargoForm(instance=registro)
+        elif tabela == "instituicao":
+            form = InstituicaoForm(instance=registro)
+        elif tabela == "curso":
+            form = CursoForm(instance=registro)
+        elif tabela == "nivelformacao":
+            form = NivelFormacaoForm(instance=registro)
+        elif tabela == "modalidade":
+            form = ModalidadeForm(instance=registro)
+        elif tabela == "contato":
+            form = ContatoForm(instance=registro)
+
+        context = {
+            'form': form,
+            'tabela': tabela,
+            'id': id,
+            'lista_modelos': model_list
+        }
+        
+        return render(request, 'admin/editar_registro.html', context)
+
     if request.method == "POST":
         form = None
         if tabela == "membro":
@@ -515,12 +526,12 @@ def editar_registro(request, tabela, id):
             form = NivelFormacaoForm(request.POST, instance=registro)
         elif tabela == "modalidade":
             form = ModalidadeForm(request.POST, instance=registro)
+        elif tabela == "contato":
+            form = ContatoForm(request.POST, instance=registro)
         
         if form.is_valid():
             form.save()
             return HttpResponseRedirect(reverse('lista_modelo', args=[tabela]))
-    
-    # return render(request, 'admin/editar_modelo.html', context)
         
 def excluir_registro(request, tabela, id):
     nome = "sad_app_" + tabela
