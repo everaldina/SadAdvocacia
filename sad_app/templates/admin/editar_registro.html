@@ -4,18 +4,28 @@
         {% csrf_token %}
         
         {% for campo in form %}
-            <div class="mb-3">
-                {{ campo }}
-            </div>
-            {% if campo.errors %}
-                <div class="alert alert-danger">
-                    {% for error in campo.errors %}
-                        <strong>{{ error|escape }}</strong>
-                    {% endfor %}
+            {% if campo.name != 'password' %}
+                <div class="mb-3">
+                    {{ campo }}
                 </div>
+                {% if campo.errors %}
+                    <div class="alert alert-danger">
+                        {% for error in campo.errors %}
+                            <strong>{{ error|escape }}</strong>
+                        {% endfor %}
+                    </div>
+                {% endif %}
             {% endif %}
             {% empty %}
         {% endfor %}
+        {% if permissoes %}
+            <h3>Permissões</h3>
+            <table>
+                <tr>
+                    
+                </tr>
+            </table>
+        {% endif %}
         <button type="submit" class="btn bg-success text-white">Enviar</button>
     </form>
 {% endblock %}

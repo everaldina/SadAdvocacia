@@ -9,6 +9,8 @@ from django.contrib.auth.hashers import make_password
 from django.apps import apps
 from django.contrib.auth.models import User
 from django.db.models.deletion import ProtectedError
+from django.contrib.auth.models import Permission
+
 
 # Create your views here.
 def context_(request):
@@ -462,8 +464,13 @@ def painel_admin(request):
 
 
 def editar_registro(request, tabela, id):
+    context = {}
     if request.method == "GET":
-        nome = "sad_app_" + tabela
+        if tabela != 'usuario':
+            nome = "sad_app_" + tabela
+        else:
+            nome = "auth_user"
+            
         model_list = {}
         model = None
         for m in apps.get_models():
@@ -476,6 +483,7 @@ def editar_registro(request, tabela, id):
                 model = m
         
         registro = model.objects.get(id=id)
+        print(model)
         form = None
         if tabela == "membro":
             form = MembroForm(instance=registro)
@@ -499,13 +507,22 @@ def editar_registro(request, tabela, id):
             form = ModalidadeForm(instance=registro)
         elif tabela == "contato":
             form = ContatoForm(instance=registro)
+        elif tabela == "usuario":
+            usuario = Usuario.objects.filter(user_ptr_id=id)
+            
+            if len(usuario) == 0:
+                form = CadastroUserForm(instance = registro)
+            else:
+                usuario = usuario[0]
+                form = CadastroUserForm(instance=usuario)
+                
+            permissioes_agrupadas = get_permissions_grouped()
+            context['permissoes'] = permissioes_agrupadas
 
-        context = {
-            'form': form,
-            'tabela': tabela,
-            'id': id,
-            'lista_modelos': model_list
-        }
+        context['form']  = form
+        context['tabela']  = tabela
+        context['id']  = id
+        context['lista_modelos']  = model_list
         
         return render(request, 'admin/editar_registro.html', context)
 
@@ -533,6 +550,8 @@ def editar_registro(request, tabela, id):
             form = ModalidadeForm(request.POST, instance=registro)
         elif tabela == "contato":
             form = ContatoForm(request.POST, instance=registro)
+        elif tabela == "usuario":
+            form = CadastroUserForm(request.POST, instance=registro)
         
         if form.is_valid():
             form.save()
@@ -549,3 +568,13 @@ def excluir_registro(request, tabela, id):
     model.objects.filter(id=id).delete()
     
     return HttpResponseRedirect(reverse('lista_modelo', args=[tabela]))
+
+
+def get_permissions_grouped():
+    permissions = Permission.objects.all()
+    permissions_grouped = {}
+    for permission in permissions:
+        if permission.content_type not in permissions_grouped:
+            permissions_grouped[permission.content_type] = []
+        permissions_grouped[permission.content_type].append(permission)
+    return permissions_grouped

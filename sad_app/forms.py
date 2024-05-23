@@ -292,4 +292,29 @@ class CadastroUsuarioForm(forms.ModelForm):
         self.fields['password'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Senha*', 'required': 'required'})
         self.fields['email'].widget.attrs.update({'class': 'form-control', 'placeholder': 'E-mail*', 'required': 'required'})
         self.fields['data_nascimento'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Data de Nascimento*', 'required': 'required'})
-        self.fields['cpf'].widget.attrs.update({'class': 'form-control', 'placeholder': 'CPF', 'required': 'required'})
+        self.fields['cpf'].widget.attrs.update({'class': 'form-control', 'placeholder': 'CPF*', 'required': 'required'})
+
+
+class CadastroUserForm(forms.ModelForm):
+    class Meta:
+        model = Usuario
+        fields = ['nome', 'username', 'email', 'password', 'data_nascimento', 'cpf']
+        labels = {
+            'nome': 'Nome',
+            'username': 'Usuário',
+            'email': 'E-mail',
+            'data_nascimento': 'Data de Nascimento',
+            'cpf': 'CPF'
+        }
+        widgets = {
+            'data_nascimento': forms.DateInput()
+        }
+        
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.fields['nome'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Nome*', 'required': 'required'})
+        self.fields['username'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Usuário*', 'required': 'required'})
+        self.fields['email'].widget.attrs.update({'class': 'form-control', 'placeholder': 'E-mail*', 'required': 'required'})
+        self.fields['data_nascimento'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Data de Nascimento'})
+        self.fields['cpf'].widget.attrs.update({'class': 'form-control', 'placeholder': 'CPF'})
