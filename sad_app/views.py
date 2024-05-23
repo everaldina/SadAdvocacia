@@ -412,11 +412,12 @@ def lista_modelo(request, tabela):
     
     context = context_(request)
     
-    
     if tabela != 'usuario':
         nome = "sad_app_" + tabela
+        link = "formulario_" + tabela
     else:
         nome = "auth_user"
+        link = "cadastro_usuario"
     model_list = {}
     model_list['usuario'] = 'Usuário'
     model_list['grupo'] = 'Grupo'
@@ -432,6 +433,7 @@ def lista_modelo(request, tabela):
     context['registros'] = registros
     context['add'] = 'formulario_' + tabela
     context['lista_modelos'] = model_list
+    context['link'] = link
     
     if request.method == "POST":
         list_delete = []
@@ -479,8 +481,6 @@ def painel_admin(request):
         if nome_tabela.startswith("sad_app") and not nome_tabela.endswith("usuario"):
             model_list["".join(nome_tabela.split("_")[2:])] = m._meta.verbose_name.capitalize()
     
-    
-
     context['lista_modelos'] = model_list
 
     return render(request, 'admin/lista.html', context=context)
@@ -497,6 +497,8 @@ def editar_registro(request, tabela, id):
             nome = "sad_app_" + tabela
             
         model_list = {}
+        model_list['usuario'] = 'Usuário'
+        model_list['grupo'] = 'Grupo'
         model = None
         for m in apps.get_models():
             nome_tabela = m._meta.db_table
@@ -504,7 +506,7 @@ def editar_registro(request, tabela, id):
                 model_list["".join(nome_tabela.split("_")[2:])] = m._meta.verbose_name.capitalize()
             elif nome_tabela == 'auth_user':
                 model_list['usuario'] = 'Usuário'
-            if nome_tabela == nome:
+            if nome_tabela == nome or nome_tabela == 'auth_group':
                 model = m
         
         registro = model.objects.get(id=id)
