@@ -385,23 +385,31 @@ def encerrar_conta(request):
     return HttpResponseRedirect(reverse('login'))
 
 def lista_modelo(request, tabela):
-    nome = "sad_app_" + tabela
+    if tabela != 'usuario':
+        nome = "sad_app_" + tabela
+    else:
+        nome = "auth_user"
     model_list = {}
     model = None
     for m in apps.get_models():
         nome_tabela = m._meta.db_table
-        if nome_tabela.startswith("sad_app"):
+        if nome_tabela.startswith("sad_app") and not nome_tabela.endswith("usuario"):
             model_list["".join(nome_tabela.split("_")[2:])] = m._meta.verbose_name.capitalize()
+        elif nome_tabela == 'auth_user':
+            model_list['usuario'] = 'Usuário'
         if nome_tabela == nome:
             model = m
             
+    
             
+    print(model)
     registros = model.objects.all()
     context = {
         'add': 'formulario_' + tabela,
         'registros': registros,
         'lista_modelos': model_list
     }
+    print(context)
     
     if request.method == "POST":
         list_delete = []

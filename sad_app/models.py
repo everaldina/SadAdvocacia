@@ -2,6 +2,7 @@ from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 import datetime
 from django.core.exceptions import ValidationError
+from django.contrib.auth.models import User
 
 class NivelFormacao(models.Model):
     nome = models.CharField(max_length=50)
@@ -105,3 +106,18 @@ class Contato(models.Model):
 
     def __str__(self):
         return self.nome + ' - ' + self.assunto
+    
+    
+class Usuario(User):
+    nome = models.CharField(max_length=100)
+    data_nascimento = models.DateField(blank=True, null=True)
+    cpf = models.CharField(max_length=20, blank=True, null=True)
+    
+    def __str__(self):
+        return self.username
+    
+    def save(self, *args, **kwargs):
+        nome_dividido = self.nome.split(' ')
+        self.first_name = nome_dividido[0]
+        self.last_name = ' '.join(nome_dividido[1:])
+        return super().save(*args, **kwargs)

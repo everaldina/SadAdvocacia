@@ -9,6 +9,7 @@ from sad_app.models import Instituicao
 from sad_app.models import Curso
 from sad_app.models import Modalidade
 from sad_app.models import NivelFormacao
+from sad_app.models import Usuario
 
 # Register your models here.
 admin.site.register(Membro)
@@ -21,3 +22,4 @@ admin.site.register(Instituicao)
 admin.site.register(Curso)
 admin.site.register(Modalidade)
 admin.site.register(NivelFormacao)
+admin.site.register(Usuario)
