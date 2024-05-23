@@ -25,13 +25,15 @@
         {% endfor %}
         {% if permissoes %}
             <h3>Permissoes</h3>
-            <div>
-                <label for="is_superuser">Super usuario</label>
-                <input type="checkbox" name="is_superuser" value="" {%if is_superuser %}checked{%endif%}>
-                <br>
-                <label for="is_staff">Staff</label>
-                <input type="checkbox" name="is_staff" value="" {%if is_staff %}checked{%endif%}>
-            </div>
+            {% if is_superuser or is_staff%}
+                <div>
+                    <label for="is_superuser">Super usuario</label>
+                    <input type="checkbox" name="is_superuser" value="" {%if is_superuser %}checked{%endif%}>
+                    <br>
+                    <label for="is_staff">Staff</label>
+                    <input type="checkbox" name="is_staff" value="" {%if is_staff %}checked{%endif%}>
+                </div>
+            {% endif %}
             {% if not is_superuser %}
                 <table class="table text-center">
                     <tr>

@@ -551,7 +551,11 @@ def editar_registro(request, tabela, id):
             context['permissao_usuario'] = permissao_usuario
             
             print(permissao_usuario)
-
+        elif tabela == "grupo":
+            form = GrupoForm(instance=registro)
+            permissioes_agrupadas = get_permissions_grouped()
+            context['permissoes'] = permissioes_agrupadas
+            
         context['form']  = form
         context['tabela']  = tabela
         context['id']  = id
