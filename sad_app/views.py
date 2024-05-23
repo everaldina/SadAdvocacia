@@ -84,9 +84,6 @@ def login(request):
         form_login = LoginForm(request.POST)
 
         form_login.add_error(None, ['Usuário ou senha inválidos'])
-        
-        for error in form_login.errors:
-            print(error)
 
         context = {
             'form_login': form_login,
@@ -145,10 +142,8 @@ def formulario_membro(request):
         form_membro = MembroForm(request.POST)
         if form_membro.is_valid():
             form_membro.save()
-            print("salvou")
             return HttpResponseRedirect(reverse('formulario_membro'))
     else:
-        print("get")
         form_membro = MembroForm()
 
     context = {
@@ -385,6 +380,17 @@ def encerrar_conta(request):
     return HttpResponseRedirect(reverse('login'))
 
 def lista_modelo(request, tabela):
+    user = request.user
+
+    if not user.is_authenticated:
+        return HttpResponseRedirect(reverse('login'))
+    
+    if not user.is_staff:
+        return HttpResponseRedirect(reverse('home'))
+    
+    context = context_(request)
+    
+    
     if tabela != 'usuario':
         nome = "sad_app_" + tabela
     else:
@@ -401,12 +407,9 @@ def lista_modelo(request, tabela):
             model = m
             
     registros = model.objects.all()
-    context = {
-        'add': 'formulario_' + tabela,
-        'registros': registros,
-        'lista_modelos': model_list
-    }
-    print(context)
+    context['registros'] = registros
+    context['add'] = 'formulario_' + tabela
+    context['lista_modelos'] = model_list
     
     if request.method == "POST":
         list_delete = []
@@ -448,8 +451,10 @@ def painel_admin(request):
     model_list = {}
     for m in apps.get_models():
         nome_tabela = m._meta.db_table
-        if nome_tabela.startswith("sad_app"):
+        if nome_tabela.startswith("sad_app") and not nome_tabela.endswith("usuario"):
             model_list["".join(nome_tabela.split("_")[2:])] = m._meta.verbose_name.capitalize()
+        elif nome_tabela == 'auth_user':
+            model_list['usuario'] = 'Usuário'
 
     context['lista_modelos'] = model_list
 
