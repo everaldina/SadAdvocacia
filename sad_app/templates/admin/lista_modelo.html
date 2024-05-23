@@ -1,5 +1,12 @@
 {% extends "./lista.html"%}
 {% block lista%}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'painel_admin' %}">Painel Admin</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ request.resolver_match.kwargs.tabela   }}</li>
+        </ol>
+    </nav>
+  
     <form action="{% url 'lista_modelo' request.resolver_match.kwargs.tabela %}" method="post">
         {% csrf_token %}
         <ul class="list-group container-fluid">
