@@ -1,6 +1,7 @@
 from django.shortcuts import render
 
 from sad_app.models import Publicacao, tipoPublicacao, Cargo
+from django.contrib.auth.models import Group
 from sad_app.forms import *
 from django.http import HttpResponseRedirect
 from django.urls import reverse
@@ -9,7 +10,6 @@ from django.contrib.auth.hashers import make_password
 from django.apps import apps
 from django.contrib.auth.models import User, Permission
 from django.db.models.deletion import ProtectedError
-
 
 # Create your views here.
 def context_(request):
@@ -565,28 +565,54 @@ def editar_registro(request, tabela, id):
 
     if request.method == "POST":
         form = None
+        registro = None
+
         if tabela == "membro":
+            registro = Membro.objects.get(id=id)
             form = MembroForm(request.POST, instance=registro)
         elif tabela == "publicacao":
+            registro = Publicacao.objects.get(id=id)
             form = PublicacaoForm(request.POST, instance=registro)
         elif tabela == "tipoPublicacao":
+            registro = tipoPublicacao.objects.get(id=id)
             form = TipoPublicacaoForm(request.POST, instance=registro)
         elif tabela == "formacao":
+            registro = Formacao.objects.get(id=id)
             form = FormacaoForm(request.POST, instance=registro)
         elif tabela == "nacionalidade":
+            registro = Nacionalidade.objects.get(id=id)
             form = NacionalidadeForm(request.POST, instance=registro)
         elif tabela == "cargo":
+            registro = Cargo.objects.get(id=id)
             form = CargoForm(request.POST, instance=registro)
         elif tabela == "instituicao":
+            registro = Instituicao.objects.get(id=id)
             form = InstituicaoForm(request.POST, instance=registro)
         elif tabela == "curso":
+            registro = Curso.objects.get(id=id)
             form = CursoForm(request.POST, instance=registro)
         elif tabela == "nivel_formacao":
+            registro = NivelFormacao.objects.get(id=id)
             form = NivelFormacaoForm(request.POST, instance=registro)
         elif tabela == "modalidade":
+            registro = Modalidade.objects.get(id=id)
             form = ModalidadeForm(request.POST, instance=registro)
         elif tabela == "contato":
+            registro = Contato.objects.get(id=id)
             form = ContatoForm(request.POST, instance=registro)
+        elif tabela == "grupo":
+            registro = Group.objects.get(id=id)
+
+            form = GrupoForm(request.POST, instance=registro)
+
+            permlist = []
+            for permissao in request.POST.getlist("permissoes"):
+                permlist.append(Permission.objects.get(id=permissao))
+
+            grupo = form.save(commit=False)
+            grupo.save()
+
+            grupo.permissions.set(permlist)
         elif tabela == "usuario":
             usuario = Usuario.objects.filter(user_ptr_id=id)
             
@@ -601,7 +627,7 @@ def editar_registro(request, tabela, id):
             for permissao in request.POST.getlist("permissoes"):
                 permlist.append(Permission.objects.get(id=permissao))
 
-            user = user.save(commit=False)
+            user = form.save(commit=False)
             user.save()
 
             user.user_permissions.set(permlist)
