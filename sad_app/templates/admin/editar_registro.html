@@ -25,7 +25,7 @@
         {% endfor %}
         {% if permissoes %}
             <h3>Permissoes</h3>
-            {% if is_superuser or is_staff%}
+            {% if is_superuser or is_staff %}
                 <div>
                     <label for="is_superuser">Super usuario</label>
                     <input type="checkbox" name="is_superuser" value="" {%if is_superuser %}checked{%endif%}>
@@ -50,16 +50,16 @@
                         <tr>
                             <td>{{ key }}</td>
                             <td>
-                                <input type="checkbox" name="permissoes" value="{{value.add.id}}" {%if value.add.id in permissao_usuario %}checked{%endif%}>
+                                <input type="checkbox" name="permissoes" value="{{value.add.id}}" {%if value.add.id in permissao_usuario or value.add.id in permissao_grupo %}checked{%endif%}>
                             </td>
                             <td>
-                                <input type="checkbox" name="permissoes" value="{{value.change.id}}" {%if value.change.id in permissao_usuario %}checked{%endif%}>
+                                <input type="checkbox" name="permissoes" value="{{value.change.id}}" {%if value.change.id in permissao_usuario or value.change.id in permissao_grupo %}checked{%endif%}>
                             </td>
                             <td>
-                                <input type="checkbox" name="permissoes" value="{{value.delete.id}}" {%if value.delete.id in permissao_usuario %}checked{%endif%}>
+                                <input type="checkbox" name="permissoes" value="{{value.delete.id}}" {%if value.delete.id in permissao_usuario or value.delete.id in permissao_grupo %}checked{%endif%}>
                             </td>
                             <td>
-                                <input type="checkbox" name="permissoes" value="{{value.view.id}}" {%if value.view.id in permissao_usuario %}checked{%endif%}>
+                                <input type="checkbox" name="permissoes" value="{{value.view.id}}" {%if value.view.id in permissao_usuario or value.view.id in permissao_grupo %}checked{%endif%}>
                             </td>
                         </tr>
                     {% endfor %}
