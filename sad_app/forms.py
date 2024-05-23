@@ -104,8 +104,6 @@ class InstituicaoForm(forms.ModelForm):
 
         self.fields['nome'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Nome*', 'required': 'required'})
         self.fields['sigla'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Sigla*', 'required': 'required'})
-        
-        d
 
 class FormacaoForm(forms.ModelForm):
     class Meta:
