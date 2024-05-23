@@ -31,4 +31,44 @@
             </div>
         </div>
     </form>
+    {% if request.method == 'POST'%}
+        <div class="modal fade" id="teste" data-bs-show="true" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="teste" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h1 class="modal-title fs-5" id="teste">
+                titulo
+            </h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                {% if count_delete %}
+                    <p>Foram deletados {{ count_delete }} registros.</p>
+                    <p>Registros deletados</p>
+                    <ul>
+                        {% for key, value in model_deletions.items %}
+                            <li>{{ key }}: {{ value }} itens</li>
+                        {% endfor %}
+                    </ul>
+
+                {% endif %}
+                {% if itens_protegidos %}
+                    <p>Não foi possivel apagar registros nas seguintes tabelas:</p>
+                    <ul>
+                        {% for tabela in tabelas_protegidos%}
+                            <li>{{ tabela }}</li>
+                        {% endfor %}
+                    </ul>
+                    <p>Os seguintes itens estão protegidos pelo registro:</p>
+                    <ul>
+                        {% for item in itens_protegidos%}
+                            <li>{{ item }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+        </div>
+        </div>
+    </div>
+    {% endif%}
 {% endblock %}
