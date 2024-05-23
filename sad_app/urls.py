@@ -15,6 +15,7 @@ urlpatterns = [
     path('cadastro/curso/', views.formulario_curso, name='formulario_curso'),
     path('cadastro/nivel-formacao/', views.formulario_nivel_formacao, name='formulario_nivelformacao'),
     path('cadastro/modalidade/', views.formulario_modalidade, name='formulario_modalidade'),
+    path('cadastro/grupo', views.formulario_grupo, name='formulario_grupo'),
     path('cadastro/', views.cadastro, name='cadastro'),
     path('login/', views.login, name='login'),
     path('logout/', views.logout, name='logout'),

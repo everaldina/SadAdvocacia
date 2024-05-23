@@ -333,8 +333,28 @@ def formulario_nivel_formacao(request):
 
     return render(request, 'forms/nivel.html', context)
 
+def formulario_grupo(request):
+    user = request.user
+
+    if not user.is_authenticated:
+        return HttpResponseRedirect(reverse('login'))
+    
+    if request.method == 'POST':
+        form_grupo = GrupoForm(request.POST)
+        if form_grupo.is_valid():
+            form_grupo.save()
+            return HttpResponseRedirect(reverse('formulario_grupo'))
+
+    form_grupo = GrupoForm()
+
+    context = {
+        'form_grupo': form_grupo,
+    }
+
+    return render(request, 'forms/grupo.html', context)
+
 def cadastro(request):
-    return HttpResponseRedirect(reverse('formulario_membro'))
+    return render(request, 'forms/membro.html')
 
 def perfil(request):
     user = request.user
@@ -391,26 +411,28 @@ def lista_modelo(request, tabela):
     
     context = context_(request)
     
-    
     if tabela != 'usuario':
         nome = "sad_app_" + tabela
+        link = "formulario_" + tabela
     else:
         nome = "auth_user"
+        link = "cadastro_usuario"
     model_list = {}
+    model_list['usuario'] = 'Usuário'
+    model_list['grupo'] = 'Grupo'
     model = None
     for m in apps.get_models():
         nome_tabela = m._meta.db_table
         if nome_tabela.startswith("sad_app") and not nome_tabela.endswith("usuario"):
             model_list["".join(nome_tabela.split("_")[2:])] = m._meta.verbose_name.capitalize()
-        elif nome_tabela == 'auth_user':
-            model_list['usuario'] = 'Usuário'
-        if nome_tabela == nome:
+        if nome_tabela == nome or nome_tabela == 'auth_group':
             model = m
             
     registros = model.objects.all()
     context['registros'] = registros
     context['add'] = 'formulario_' + tabela
     context['lista_modelos'] = model_list
+    context['link'] = link
     
     if request.method == "POST":
         list_delete = []
@@ -450,13 +472,14 @@ def painel_admin(request):
     context = context_(request)
 
     model_list = {}
+    model_list['usuario'] = 'Usuário'
+    model_list['grupo'] = 'Grupo'
+
     for m in apps.get_models():
         nome_tabela = m._meta.db_table
         if nome_tabela.startswith("sad_app") and not nome_tabela.endswith("usuario"):
             model_list["".join(nome_tabela.split("_")[2:])] = m._meta.verbose_name.capitalize()
-        elif nome_tabela == 'auth_user':
-            model_list['usuario'] = 'Usuário'
-
+    
     context['lista_modelos'] = model_list
 
     return render(request, 'admin/lista.html', context=context)
@@ -465,12 +488,16 @@ def painel_admin(request):
 def editar_registro(request, tabela, id):
     context = {}
     if request.method == "GET":
-        if tabela != 'usuario':
-            nome = "sad_app_" + tabela
-        else:
+        if tabela == 'usuario':
             nome = "auth_user"
+        elif tabela == 'grupo':
+            nome = "auth_group"
+        else:
+            nome = "sad_app_" + tabela
             
         model_list = {}
+        model_list['usuario'] = 'Usuário'
+        model_list['grupo'] = 'Grupo'
         model = None
         for m in apps.get_models():
             nome_tabela = m._meta.db_table
@@ -478,11 +505,10 @@ def editar_registro(request, tabela, id):
                 model_list["".join(nome_tabela.split("_")[2:])] = m._meta.verbose_name.capitalize()
             elif nome_tabela == 'auth_user':
                 model_list['usuario'] = 'Usuário'
-            if nome_tabela == nome:
+            if nome_tabela == nome or nome_tabela == 'auth_group':
                 model = m
         
         registro = model.objects.get(id=id)
-        print(model)
         form = None
         if tabela == "membro":
             form = MembroForm(instance=registro)
@@ -581,7 +607,13 @@ def editar_registro(request, tabela, id):
             return HttpResponseRedirect(reverse('lista_modelo', args=[tabela]))
         
 def excluir_registro(request, tabela, id):
-    nome = "sad_app_" + tabela
+    if tabela == 'usuario':
+            nome = "auth_user"
+    elif tabela == 'grupo':
+        nome = "auth_group"
+    else:
+        nome = "sad_app_" + tabela
+
     model = None
     for m in apps.get_models():
         nome_tabela = m._meta.db_table

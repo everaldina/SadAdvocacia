@@ -1,16 +1,6 @@
 from django import forms
-from .models import Contato
-from .models import NivelFormacao
-from .models import Modalidade
-from .models import Curso
-from .models import Instituicao
-from .models import Formacao
-from .models import Nacionalidade
-from .models import Cargo
-from .models import Membro
-from .models import Publicacao
-from .models import tipoPublicacao
-from .models import Usuario
+from .models import *
+from django.contrib.auth.models import Group
 
 class ContatoForm(forms.ModelForm):
     class Meta:
@@ -316,3 +306,16 @@ class CadastroUserForm(forms.ModelForm):
         self.fields['email'].widget.attrs.update({'class': 'form-control', 'placeholder': 'E-mail*', 'required': 'required'})
         self.fields['data_nascimento'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Data de Nascimento'})
         self.fields['cpf'].widget.attrs.update({'class': 'form-control', 'placeholder': 'CPF'})
+
+class GrupoForm(forms.ModelForm):
+    class Meta:
+        model = Group
+        fields = ['name']
+        labels = {
+            'name': 'Nome'
+        }
+        
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.fields['name'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Nome*', 'required': 'required'})
