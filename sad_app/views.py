@@ -7,7 +7,7 @@ from django.urls import reverse
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.contrib.auth.hashers import make_password
 from django.apps import apps
-
+from django.contrib.auth.models import User
 from django.db.models.deletion import ProtectedError
 
 # Create your views here.
@@ -454,3 +454,82 @@ def painel_admin(request):
     context['lista_modelos'] = model_list
 
     return render(request, 'admin/lista.html', context=context)
+
+
+def editar_registro(request, tabela, id):
+    nome = "sad_app_" + tabela
+    model = None
+    for m in apps.get_models():
+        nome_tabela = m._meta.db_table
+        if nome_tabela == nome:
+            model = m
+    
+    registro = model.objects.get(id=id)
+    form = None
+    if tabela == "membro":
+        form = MembroForm(instance=registro)
+    elif tabela == "publicacao":
+        form = PublicacaoForm(instance=registro)
+    elif tabela == "tipoPublicacao":
+        form = TipoPublicacaoForm(instance=registro)
+    elif tabela == "formacao":
+        form = FormacaoForm(instance=registro)
+    elif tabela == "nacionalidade":
+        form = NacionalidadeForm(instance=registro)
+    elif tabela == "cargo":
+        form = CargoForm(instance=registro)
+    elif tabela == "instituicao":
+        form = InstituicaoForm(instance=registro)
+    elif tabela == "curso":
+        form = CursoForm(instance=registro)
+    elif tabela == "nivel_formacao":
+        form = NivelFormacaoForm(instance=registro)
+    elif tabela == "modalidade":
+        form = ModalidadeForm(instance=registro)
+        
+    context = {
+        'form': form,
+        'tabela': tabela,
+        'id': id,
+    }
+    
+    if request.method == "POST":
+        form = None
+        if tabela == "membro":
+            form = MembroForm(request.POST, instance=registro)
+        elif tabela == "publicacao":
+            form = PublicacaoForm(request.POST, instance=registro)
+        elif tabela == "tipoPublicacao":
+            form = TipoPublicacaoForm(request.POST, instance=registro)
+        elif tabela == "formacao":
+            form = FormacaoForm(request.POST, instance=registro)
+        elif tabela == "nacionalidade":
+            form = NacionalidadeForm(request.POST, instance=registro)
+        elif tabela == "cargo":
+            form = CargoForm(request.POST, instance=registro)
+        elif tabela == "instituicao":
+            form = InstituicaoForm(request.POST, instance=registro)
+        elif tabela == "curso":
+            form = CursoForm(request.POST, instance=registro)
+        elif tabela == "nivel_formacao":
+            form = NivelFormacaoForm(request.POST, instance=registro)
+        elif tabela == "modalidade":
+            form = ModalidadeForm(request.POST, instance=registro)
+        
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('lista_modelo', args=[tabela]))
+    
+    # return render(request, 'admin/editar_modelo.html', context)
+        
+def excluir_registro(request, tabela, id):
+    nome = "sad_app_" + tabela
+    model = None
+    for m in apps.get_models():
+        nome_tabela = m._meta.db_table
+        if nome_tabela == nome:
+            model = m
+    
+    model.objects.filter(id=id).delete()
+    
+    return HttpResponseRedirect(reverse('lista_modelo', args=[tabela]))
