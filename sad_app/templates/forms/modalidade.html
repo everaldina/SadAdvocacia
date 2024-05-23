@@ -1,6 +1,5 @@
 {% extends "cadastro.html" %}
-{% block form %}
-    <h3 class="text-center mb-3"> <strong>Cadastrar modalidade</strong> </h3>     
+{% block form %}    
     <form action="{% url 'formulario_modalidade' %}" method="post">
         {% csrf_token %}
         

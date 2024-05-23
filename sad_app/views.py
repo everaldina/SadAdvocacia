@@ -400,9 +400,6 @@ def lista_modelo(request, tabela):
         if nome_tabela == nome:
             model = m
             
-    
-            
-    print(model)
     registros = model.objects.all()
     context = {
         'add': 'formulario_' + tabela,
@@ -437,9 +434,6 @@ def lista_modelo(request, tabela):
         
     return render(request, 'admin/lista_modelo.html', context)
     
-    
-    
-    
 def painel_admin(request):
     user = request.user
 
@@ -451,19 +445,12 @@ def painel_admin(request):
     
     context = context_(request)
 
-    tables = [
-        'membro',
-        'publicacao',
-        'tipo_publicacao',
-        'formacao',
-        'nacionalidade'
-        'cargo',
-        'instituicao',
-        'curso',
-        'modalidade',
-        'nivel_formacao',
-    ]
+    model_list = {}
+    for m in apps.get_models():
+        nome_tabela = m._meta.db_table
+        if nome_tabela.startswith("sad_app"):
+            model_list["".join(nome_tabela.split("_")[2:])] = m._meta.verbose_name.capitalize()
 
-    context['tables'] = tables
+    context['lista_modelos'] = model_list
 
-    return render(request, 'admin/painel_admin.html', context=context)
+    return render(request, 'admin/lista.html', context=context)
