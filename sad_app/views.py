@@ -7,9 +7,8 @@ from django.urls import reverse
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.contrib.auth.hashers import make_password
 from django.apps import apps
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Permission
 from django.db.models.deletion import ProtectedError
-from django.contrib.auth.models import Permission
 
 
 # Create your views here.
@@ -510,14 +509,22 @@ def editar_registro(request, tabela, id):
         elif tabela == "usuario":
             usuario = Usuario.objects.filter(user_ptr_id=id)
             
-            if len(usuario) == 0:
-                form = CadastroUserForm(instance = registro)
-            else:
-                usuario = usuario[0]
-                form = CadastroUserForm(instance=usuario)
+            if len(usuario) != 0:
+                registro = usuario[0]
+                
+            form = CadastroUserForm(instance = registro)
+            context['is_superuser'] = registro.is_superuser
+            context['is_staff'] = registro.is_staff
+            
+            permissao_usuario = []
+            for permissao in registro.user_permissions.all():
+                permissao_usuario.append(permissao.id)
                 
             permissioes_agrupadas = get_permissions_grouped()
             context['permissoes'] = permissioes_agrupadas
+            context['permissao_usuario'] = permissao_usuario
+            
+            print(permissao_usuario)
 
         context['form']  = form
         context['tabela']  = tabela
@@ -551,7 +558,23 @@ def editar_registro(request, tabela, id):
         elif tabela == "contato":
             form = ContatoForm(request.POST, instance=registro)
         elif tabela == "usuario":
+            usuario = Usuario.objects.filter(user_ptr_id=id)
+            
+            if len(usuario) != 0:
+                registro = usuario[0]
+            
             form = CadastroUserForm(request.POST, instance=registro)
+            context['is_superuser'] = registro.is_superuser
+            context['is_staff'] = registro.is_staff
+            
+            permlist = []
+            for permissao in request.POST.getlist("permissoes"):
+                permlist.append(Permission.objects.get(id=permissao))
+
+            user = user.save(commit=False)
+            user.save()
+
+            user.user_permissions.set(permlist)
         
         if form.is_valid():
             form.save()
@@ -573,8 +596,11 @@ def excluir_registro(request, tabela, id):
 def get_permissions_grouped():
     permissions = Permission.objects.all()
     permissions_grouped = {}
+    
     for permission in permissions:
-        if permission.content_type not in permissions_grouped:
-            permissions_grouped[permission.content_type] = []
-        permissions_grouped[permission.content_type].append(permission)
+        nome_permissao = permission.codename.split("_")
+        if nome_permissao[1] not in permissions_grouped:
+            permissions_grouped[nome_permissao[1]] = {nome_permissao[0]: permission}
+        else:
+            permissions_grouped[nome_permissao[1]][nome_permissao[0]] = permission
     return permissions_grouped
