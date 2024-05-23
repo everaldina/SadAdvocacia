@@ -25,8 +25,8 @@
         {% endfor %}
         {% if permissoes %}
             <h3>Permissoes</h3>
-            {% if is_superuser or is_staff %}
-                <div>
+            {% if mode and  mode == 'user' %}
+                <div class="mb-3">
                     <label for="is_superuser">Super usuario</label>
                     <input type="checkbox" name="is_superuser" value="" {%if is_superuser %}checked{%endif%}>
                     <br>
@@ -34,36 +34,51 @@
                     <input type="checkbox" name="is_staff" value="" {%if is_staff %}checked{%endif%}>
                 </div>
             {% endif %}
-            {% if not is_superuser %}
-                <table class="table text-center">
-                    <tr>
-                        <th rowspan="2">Permissão</th>
-                        <th colspan="4">Permitido</th>
-                    </tr>
-                    <tr>
-                        <td>adicionar</td>
-                        <td>modificar</td>
-                        <td>excluir</td>
-                        <td>visualizar</td>
-                    </tr>
-                    {% for key, value in permissoes.items %}
+            {% if not is_superuser and mode %}
+                <div class="mb-3">
+                    <table class="table text-center">
                         <tr>
-                            <td>{{ key }}</td>
-                            <td>
-                                <input type="checkbox" name="permissoes" value="{{value.add.id}}" {%if value.add.id in permissao_usuario or value.add.id in permissao_grupo %}checked{%endif%}>
-                            </td>
-                            <td>
-                                <input type="checkbox" name="permissoes" value="{{value.change.id}}" {%if value.change.id in permissao_usuario or value.change.id in permissao_grupo %}checked{%endif%}>
-                            </td>
-                            <td>
-                                <input type="checkbox" name="permissoes" value="{{value.delete.id}}" {%if value.delete.id in permissao_usuario or value.delete.id in permissao_grupo %}checked{%endif%}>
-                            </td>
-                            <td>
-                                <input type="checkbox" name="permissoes" value="{{value.view.id}}" {%if value.view.id in permissao_usuario or value.view.id in permissao_grupo %}checked{%endif%}>
-                            </td>
+                            <th rowspan="2">Permissão</th>
+                            <th colspan="4">Permitido</th>
                         </tr>
-                    {% endfor %}
-                </table>
+                        <tr>
+                            <td>adicionar</td>
+                            <td>modificar</td>
+                            <td>excluir</td>
+                            <td>visualizar</td>
+                        </tr>
+                        {% for key, value in permissoes.items %}
+                            <tr>
+                                <td>{{ key }}</td>
+                                <td>
+                                    <input type="checkbox" name="permissoes" value="{{value.add.id}}" {%if value.add.id in permissao_usuario or value.add.id in permissao_grupo %}checked{%endif%}>
+                                </td>
+                                <td>
+                                    <input type="checkbox" name="permissoes" value="{{value.change.id}}" {%if value.change.id in permissao_usuario or value.change.id in permissao_grupo %}checked{%endif%}>
+                                </td>
+                                <td>
+                                    <input type="checkbox" name="permissoes" value="{{value.delete.id}}" {%if value.delete.id in permissao_usuario or value.delete.id in permissao_grupo %}checked{%endif%}>
+                                </td>
+                                <td>
+                                    <input type="checkbox" name="permissoes" value="{{value.view.id}}" {%if value.view.id in permissao_usuario or value.view.id in permissao_grupo %}checked{%endif%}>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            {% endif %}
+            {% if mode and mode == 'user' and not is_superuser%}
+                <div class="mb-3">
+                    <h3>Grupos</h3>
+                    <ul class="list-group">
+                        {% for grupo in grupos %}
+                            <li class="list-group-item">
+                                <input type="checkbox" name="grupos" value="{{grupo.id}}" {%if grupo.id in grupos_usuario %}checked{%endif%}>
+                                {{grupo}}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
             {% endif %}
         {% endif %}
         <button type="submit" class="btn bg-success text-white">Enviar</button>

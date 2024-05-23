@@ -549,6 +549,9 @@ def editar_registro(request, tabela, id):
             permissioes_agrupadas = get_permissions_grouped()
             context['permissoes'] = permissioes_agrupadas
             context['permissao_usuario'] = permissao_usuario
+            context['mode'] = 'user'
+            context['grupos'] = Group.objects.all()
+            context['grupos_usuario'] = registro.groups.all()
             
             print(permissao_usuario)
         elif tabela == "grupo":
@@ -561,6 +564,7 @@ def editar_registro(request, tabela, id):
                 
             context['permissoes'] = permissioes_agrupadas
             context['permissao_grupo'] = permissao_grupo
+            context['mode'] = 'group'
             
             
             
@@ -634,11 +638,16 @@ def editar_registro(request, tabela, id):
             permlist = []
             for permissao in request.POST.getlist("permissoes"):
                 permlist.append(Permission.objects.get(id=permissao))
+            
+            grouplist = []
+            for grupo in request.POST.getlist("grupos"):
+                grouplist.append(Group.objects.get(id=grupo))
 
             user = form.save(commit=False)
             user.save()
 
             user.user_permissions.set(permlist)
+            user.user_groups.set(grouplist)
         
         if form.is_valid():
             form.save()
