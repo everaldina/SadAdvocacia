@@ -486,6 +486,12 @@ def painel_admin(request):
 
 
 def editar_registro(request, tabela, id):
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect(reverse('login'))
+    
+    if not request.user.is_staff:
+        return HttpResponseRedirect(reverse('home'))
+
     context = {}
     if request.method == "GET":
         if tabela == 'usuario':
@@ -641,8 +647,8 @@ def editar_registro(request, tabela, id):
             data['password'] = registro.password
 
             form = CadastroUserForm(data, instance=registro)
-            context['is_superuser'] = registro.is_superuser
-            context['is_staff'] = registro.is_staff
+
+            print(request.POST)
             
             permlist = []
             for permissao in request.POST.getlist("permissoes"):
@@ -657,6 +663,12 @@ def editar_registro(request, tabela, id):
 
             user.user_permissions.set(permlist)
             user.groups.set(grouplist)
+            
+            if 'is_staff' in request.POST:
+                user.is_staff = request.POST['is_staff']
+
+            if 'is_superuser' in request.POST:
+                user.is_superuser = request.POST['is_superuser']
         
         if form.is_valid():
             form.save()

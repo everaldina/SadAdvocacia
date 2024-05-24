@@ -28,10 +28,10 @@
             {% if mode and  mode == 'user' %}
                 <div class="mb-3">
                     <label for="is_superuser">Super usuario</label>
-                    <input type="checkbox" name="is_superuser" value="" {%if is_superuser %}checked{%endif%}>
+                    <input type="checkbox" name="is_superuser" value="True" {%if is_superuser %}checked{%endif%}>
                     <br>
                     <label for="is_staff">Staff</label>
-                    <input type="checkbox" name="is_staff" value="" {%if is_staff %}checked{%endif%}>
+                    <input type="checkbox" name="is_staff" value="True" {%if is_staff %}checked{%endif%}>
                 </div>
             {% endif %}
             {% if not is_superuser and mode %}
